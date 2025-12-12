@@ -1,0 +1,201 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- SEO PRINCIPAL -->
+  <title>Coleção Limitada — Be Like Us</title>
+
+  <meta name="description"
+    content="Coleções limitadas da Be Like Us: peças exclusivas, produzidas artesanalmente e em baixa escala. Estética contemporânea, curadoria precisa e identidade visual forte.">
+
+  <link rel="canonical" href="https://seusite.com/colecao/" />
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="Coleção Limitada — Be Like Us">
+  <meta property="og:description"
+    content="Peças exclusivas produzidas em baixa escala, com curadoria estética e visão contemporânea. Drops raros e numerados.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://seusite.com/colecao/">
+  <meta property="og:image" content="https://seusite.com/public/colecao-preview.jpg">
+
+  <!-- TWITTER CARD -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Coleção Limitada — Be Like Us">
+  <meta name="twitter:description"
+    content="Moda limitada, autoral e produzida em escala reduzida. Curadoria e estética contemporânea.">
+  <meta name="twitter:image" content="https://seusite.com/public/colecao-preview.jpg">
+
+  <!-- FAVICON -->
+<link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/favicon/site.webmanifest">
+
+  <!-- JSON-LD (CollectionPage) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Coleção Limitada — Be Like Us",
+    "url": "https://seusite.com/colecao/",
+    "description": "Coleções limitadas e peças exclusivas da Be Like Us, produzidas em baixa escala com estética contemporânea e curadoria autoral.",
+    "about": [
+      { "@type": "Thing", "name": "Moda contemporânea" },
+      { "@type": "Thing", "name": "Coleções limitadas" },
+      { "@type": "Thing", "name": "Estética urbana" },
+      { "@type": "Thing", "name": "Design autoral" }
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Be Like Us",
+      "url": "https://seusite.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://seusite.com/public/logo.png"
+      }
+    }
+  }
+  </script>
+
+  <!-- TAILWIND -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- FONTES -->
+  <style>
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial;
+    }
+
+    .container-max {
+      max-width: 1100px;
+      margin: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-black antialiased">
+
+  <!-- HEADER -->
+  <header class="border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="/" class="flex items-center">
+        <img src="/public/logo.png" class="h-20 w-auto object-contain" />
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="/blog/index.html" class="hover:underline">Do blog</a>
+        <a href="/sobre/index.html" class="hover:underline">Sobre</a>
+        <a href="/contato/index.html" class="hover:underline">Contato</a>
+        <button id="themeToggle" class="theme-toggle px-3 py-1 border rounded text-xs">🌙</button>
+
+      </nav>
+
+      <div class="md:hidden">
+        <button class="px-3 py-2 border rounded text-xs">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="container-max py-12">
+    <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">Coleção Limitada</h1>
+    <p class="mt-4 text-lg text-gray-700 max-w-2xl leading-relaxed">
+      Peças exclusivas produzidas artesanalmente, em baixa escala, com foco em estética urbana
+      contemporânea. Cada item é numerado e disponibilizado apenas uma vez.
+    </p>
+
+    <!-- placeholder hero -->
+    <div class="mt-10 h-72 bg-gray-200 rounded flex items-center justify-center text-gray-600">
+      Hero da coleção (foto grande)
+    </div>
+  </section>
+
+  <!-- PRODUTOS -->
+  <section class="container-max py-10">
+
+    <h2 class="text-2xl font-semibold mb-6">Drop 01 — “Foundations”</h2>
+    <p class="text-gray-700 mb-10 max-w-2xl">
+      Primeiro drop da Be Like Us. Uma coleção pequena, feita para criar identidade:
+      formas amplas, tons sóbrios e estética minimalista urbana.
+      Produção limitada para manter exclusividade.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Item 1 -->
+      <div class="border rounded-lg overflow-hidden">
+        <div class="h-56 bg-gray-200 flex items-center justify-center text-gray-600">
+          Foto do produto
+        </div>
+        <div class="p-4">
+          <h3 class="text-lg font-medium">Hoodie Oversized</h3>
+          <p class="text-xs text-gray-600 mt-1">Unidade 01 de 10</p>
+          <p class="mt-3 text-sm">R$ 249,00</p>
+          <button class="mt-4 px-4 py-2 bg-black text-white rounded text-sm">Ver detalhes</button>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="border rounded-lg overflow-hidden">
+        <div class="h-56 bg-gray-200 flex items-center justify-center text-gray-600">
+          Foto do produto
+        </div>
+        <div class="p-4">
+          <h3 class="text-lg font-medium">Cargo Pants Utility</h3>
+          <p class="text-xs text-gray-600 mt-1">Unidade 02 de 10</p>
+          <p class="mt-3 text-sm">R$ 199,00</p>
+          <button class="mt-4 px-4 py-2 bg-black text-white rounded text-sm">Ver detalhes</button>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="border rounded-lg overflow-hidden">
+        <div class="h-56 bg-gray-200 flex items-center justify-center text-gray-600">
+          Foto do produto
+        </div>
+        <div class="p-4">
+          <h3 class="text-lg font-medium">Camiseta Premium</h3>
+          <p class="text-xs text-gray-600 mt-1">Unidade 03 de 10</p>
+          <p class="mt-3 text-sm">R$ 129,00</p>
+          <button class="mt-4 px-4 py-2 bg-black text-white rounded text-sm">Ver detalhes</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="container-max py-16 border-t">
+    <h2 class="text-2xl font-semibold">Por que coleção limitada?</h2>
+
+    <p class="mt-4 text-gray-700 max-w-3xl leading-relaxed">
+      A ideia da Be Like Us é criar peças que tenham significado, estética e exclusividade.
+      Cada peça é pensada para durar e ser única — nada de produção massiva ou fast fashion.
+      Tudo é feito com cuidado, em quantidade reduzida e com foco na identidade visual.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t mt-10 py-6">
+    <div class="container-max flex flex-col md:flex-row items-center justify-between text-xs text-gray-500">
+      <div>© <span id="year"></span> Be Like Us. Todos os direitos reservados.</div>
+      <div class="flex gap-4 mt-3 md:mt-0">
+        <a href="#" class="hover:underline">Privacy</a>
+        <a href="#" class="hover:underline">Terms</a>
+        <a href="/contato/index.html" class="hover:underline">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+<script src="/js/theme.js"></script>
+</body>
+</html>
