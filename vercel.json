@@ -1,4 +1,15 @@
 {
+  "headers": [
+    {
+      "source": "/site.webmanifest",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/site.webmanifest",
@@ -9,19 +20,8 @@
       "destination": "/favicon.ico"
     },
     {
-      "source": "/(.*)", 
-      "destination": "/" 
-    }
-  ],
-  "headers": [
-    {
-      "source": "/site.webmanifest",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        }
-      ]
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }
