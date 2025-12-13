@@ -3,58 +3,58 @@
 
   <!-- HOME -->
   <url>
-    <loc>https://seusite.com/</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- BLOG -->
   <url>
-    <loc>https://seusite.com/blog/</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/blog/index.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- POSTS -->
   <url>
-    <loc>https://seusite.com/blog/post-visoes-2026.html</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/blog/post-visoes-2026.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seusite.com/blog/post-cargos-futuro.html</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/blog/post-cargos-futuro.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seusite.com/blog/post-techmodular.html</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/blog/post-techmodular.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seusite.com/blog/post-darkwear.html</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/blog/post-darkwear.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seusite.com/blog/post-upcycling.html</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/blog/post-upcycling.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://seusite.com/blog/post-y2k-evolucao.html</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/blog/post-y2k-evolucao.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- SOBRE -->
   <url>
-    <loc>https://seusite.com/sobre/</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/sobre/index.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -68,7 +68,7 @@
 
   <!-- CONTATO -->
   <url>
-    <loc>https://seusite.com/contato/</loc>
+    <loc>https://be-like-us-site-nu.vercel.app/contato/index.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
