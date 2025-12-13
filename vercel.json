@@ -1,13 +1,1 @@
-{
-  "headers": [
-    {
-      "source": "/site.webmanifest",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        }
-      ]
-    }
-  ]
-}
+{}
