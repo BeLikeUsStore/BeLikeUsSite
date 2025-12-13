@@ -111,10 +111,27 @@
     </nav>
 
     <div class="md:hidden">
-      <button class="px-3 py-2 border rounded text-xs">Menu</button>
+      <button id="openMenu" class="px-3 py-2 border rounded text-xs">
+  Menu
+</button>
+
     </div>
   </div>
 </header>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden md:hidden">
+  <div class="p-6 flex flex-col gap-6 text-lg">
+    <a href="/blog/index.html">Blog</a>
+    <a href="/sobre/index.html">Sobre</a>
+    <a href="/contato/index.html">Contato</a>
+
+    <button id="closeMenu" class="mt-10 text-sm underline">
+      Fechar
+    </button>
+  </div>
+</div>
+
 
 <main class="container-max">
 
@@ -251,6 +268,21 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 <script src="/js/theme.js"></script>
+
+<script>
+  const openMenu = document.getElementById('openMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  openMenu.addEventListener('click', () => {
+    mobileMenu.classList.remove('hidden');
+  });
+
+  closeMenu.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+  });
+</script>
+
 
 </body>
 </html>
