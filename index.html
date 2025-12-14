@@ -290,17 +290,23 @@
 <script src="/js/theme.js"></script>
 
 <script>
-  const openBtn = document.getElementById('menuToggle');
-  const closeBtn = document.getElementById('MenuClose');
-  const menu = document.getElementById('mobileMenu');
+document.addEventListener("DOMContentLoaded", () => {
+  const openBtn = document.getElementById("menuToggle");
+  const closeBtn = document.getElementById("menuClose");
+  const menu = document.getElementById("mobileMenu");
 
-  openBtn.addEventListener('click', () => {
-    menu.classList.remove('hidden');
+  if (!openBtn || !closeBtn || !menu) return;
+
+  openBtn.addEventListener("click", () => {
+    menu.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
   });
 
-  closeBtn.addEventListener('click', () => {
-    menu.classList.add('hidden');
+  closeBtn.addEventListener("click", () => {
+    menu.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
   });
+});
 </script>
 
 </body>
