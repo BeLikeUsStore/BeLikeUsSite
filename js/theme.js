@@ -30,15 +30,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuClose = document.getElementById("menuClose");
   const mobileMenu = document.getElementById("mobileMenu");
 
-  if (!menuToggle || !mobileMenu) return;
+  if (!menuToggle || !menuClose || !mobileMenu) return;
 
-  menuToggle.addEventListener("click", () => {
+  const openMenu = () => {
     mobileMenu.classList.remove("hidden");
-  });
-
-  if (menuClose) {
-    menuClose.addEventListener("click", () => {
-      mobileMenu.classList.add("hidden");
+    requestAnimationFrame(() => {
+      mobileMenu.classList.remove("translate-x-[-100%]");
+      mobileMenu.classList.add("translate-x-0");
     });
-  }
+    document.body.classList.add("overflow-hidden");
+  };
+
+  const closeMenu = () => {
+    mobileMenu.classList.remove("translate-x-0");
+    mobileMenu.classList.add("translate-x-[-100%]");
+    document.body.classList.remove("overflow-hidden");
+
+    setTimeout(() => {
+      mobileMenu.classList.add("hidden");
+    }, 300);
+  };
+
+  menuToggle.addEventListener("click", openMenu);
+  menuClose.addEventListener("click", closeMenu);
 });

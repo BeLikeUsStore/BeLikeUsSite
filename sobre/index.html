@@ -122,14 +122,28 @@
 </header>
 
 <!-- MENU MOBILE OVERLAY -->
-<div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden">
+<div
+  id="mobileMenu"
+  class="fixed inset-0 bg-white z-50 hidden translate-x-[-100%] transition-transform duration-300 ease-in-out"
+>
 
   <div class="p-6 flex flex-col gap-6 text-lg">
 
+    <!-- BOTÃO FECHAR -->
     <button id="menuClose" class="self-end text-2xl" aria-label="Fechar menu">
       ✕
     </button>
 
+    <!-- LOGO -->
+    <div class="flex justify-center mb-4">
+      <img
+        src="/public/logo.png"
+        alt="Be Like Us"
+        class="h-16 w-auto"
+      />
+    </div>
+
+    <!-- LINKS -->
     <a href="/blog/index.html" class="border-b pb-2">Do blog</a>
     <a href="/sobre/index.html" class="border-b pb-2">Sobre</a>
     <a href="/contato/index.html" class="border-b pb-2">Contato</a>
