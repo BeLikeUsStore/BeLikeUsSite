@@ -27,12 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===== MENU MOBILE =====
 document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menuToggle");
+  const menuClose = document.getElementById("menuClose");
   const mobileMenu = document.getElementById("mobileMenu");
 
   if (!menuToggle || !mobileMenu) return;
 
   menuToggle.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
+    mobileMenu.classList.remove("hidden");
   });
-});
 
+  if (menuClose) {
+    menuClose.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
+    });
+  }
+});
