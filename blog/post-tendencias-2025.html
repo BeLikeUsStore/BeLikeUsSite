@@ -243,5 +243,20 @@
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 <script src="/js/theme.js"></script>
+
+<script>
+  const openMenu = document.getElementById('openMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  openMenu.addEventListener('click', () => {
+    mobileMenu.classList.remove('hidden');
+  });
+
+  closeMenu.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+  });
+</script>
+
 </body>
 </html>
