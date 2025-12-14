@@ -93,10 +93,11 @@
 
   <!-- HEADER -->
   <header class="border-b border-gray-200">
-    <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
-      <a href="/" class="flex items-center">
-        <img src="/public/logo.png" class="h-20 w-auto object-contain" />
+    <div class="container-max relative flex items-center justify-center md:justify-between py-5">
+      <a href="/" class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+  <img src="/public/logo.png" alt="Logotipo Be Like Us" class="h-20 w-auto object-contain" />
       </a>
+
 
       <nav class="hidden md:flex items-center gap-6 text-sm">
         <a href="/blog/index.html" class="hover:underline">Do blog</a>
@@ -106,16 +107,16 @@
 
       </nav>
 
-      <div class="md:hidden">
-  <button id="mobileMenuButton" aria-label="Abrir menu" class="p-2">
-    <!-- ÍCONE HAMBÚRGUER -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <line x1="4" y1="6" x2="20" y2="6" />
-      <line x1="4" y1="12" x2="20" y2="12" />
-      <line x1="4" y1="18" x2="20" y2="18" />
+<div class="absolute left-0 md:hidden">
+  <button id="menuToggle" aria-label="Abrir menu">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
     </svg>
   </button>
-    </div>
+</div>
+
 
     </div>
   </header>
