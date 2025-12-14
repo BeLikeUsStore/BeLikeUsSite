@@ -103,14 +103,26 @@
       <a href="/sobre/index.html" class="hover:underline">Sobre</a>
       <a href="/contato/index.html" class="underline underline-offset-2">Contato</a>
       <button id="themeToggle" class="theme-toggle px-3 py-1 border rounded text-xs">🌙</button>
-
     </nav>
 
     <div class="md:hidden">
-      <button class="px-3 py-2 border rounded text-xs">Menu</button>
+      <button id="openMenu" class="px-3 py-2 border rounded text-xs">Menu</button>
     </div>
   </div>
 </header>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden md:hidden">
+  <div class="p-6 flex flex-col gap-6 text-lg">
+    <a href="/blog/index.html">Blog</a>
+    <a href="/sobre/index.html">Sobre</a>
+    <a href="/contato/index.html">Contato</a>
+
+    <button id="closeMenu" class="mt-10 text-sm underline">
+      Fechar
+    </button>
+  </div>
+</div>
 
 <main class="container-max py-16">
 
