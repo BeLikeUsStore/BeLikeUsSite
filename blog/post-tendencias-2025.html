@@ -133,22 +133,20 @@
     </div>
   </header>
 
-<!-- MENU MOBILE -->
+<!-- MENU MOBILE OVERLAY -->
 <div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden">
 
-  <div class="p-6">
-    <!-- FECHAR -->
-    <button id="closeMobileMenu" aria-label="Fechar menu" class="mb-8">
+  <div class="p-6 flex flex-col gap-6 text-lg">
+
+    <button id="menuClose" class="self-end text-2xl" aria-label="Fechar menu">
       ✕
     </button>
 
-    <nav class="flex flex-col gap-6 text-lg">
-      <a href="/blog/index.html">Do blog</a>
-      <a href="/sobre/index.html">Sobre</a>
-      <a href="/contato/index.html">Contato</a>
-    </nav>
-  </div>
+    <a href="/blog/index.html" class="border-b pb-2">Do blog</a>
+    <a href="/sobre/index.html" class="border-b pb-2">Sobre</a>
+    <a href="/contato/index.html" class="border-b pb-2">Contato</a>
 
+  </div>
 </div>
 
 <main class="max-w-3xl mx-auto px-6 py-12">
