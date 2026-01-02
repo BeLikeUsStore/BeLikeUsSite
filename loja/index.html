@@ -18,23 +18,25 @@
 
 <body class="bg-white text-black antialiased">
 
-<!-- HEADER (igual ao resto do site) -->
-<header class="border-b">
-  <div class="container-max flex items-center justify-between py-5">
+<!-- HEADER -->
+<header id="siteHeader" class="border-b fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300">
+  <div id="headerInner" class="container-max flex items-center justify-between py-5 transition-all duration-300">
     <a href="/">
-      <img src="/public/logo.png" alt="Be Like Us" class="h-20 w-auto object-contain">
+      <img src="/public/logo.png" alt="Be Like Us" class="h-20 w-auto object-contain transition-all duration-300">
     </a>
 
     <nav class="hidden md:flex gap-6 text-sm">
       <a href="/blog/index.html" class="hover:underline">Blog</a>
-      <a href="/loja/index.html" class="underline">Loja</a>
+      <a href="/loja/index.html" class="hover:underline">Loja</a>
       <a href="/sobre/index.html" class="hover:underline">Sobre</a>
       <a href="/contato/index.html" class="hover:underline">Contato</a>
     </nav>
   </div>
 </header>
 
-<main class="bg-[#f7f7f7] min-h-screen py-10">
+<main class="pt-32 bg-[#f7f7f7] min-h-screen py-10">
+
+ <div class="h-28"></div>
 
   <!-- CONTAINER CENTRAL -->
   <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-sm px-6 md:px-12 py-10">
@@ -48,109 +50,33 @@
         Encontre looks que combinam com seu estilo
       </p>
 
-      <!-- FILTROS -->
-      <div class="flex flex-wrap justify-center gap-3 mt-8 text-sm">
-        <button class="px-4 py-2 border rounded-full hover:bg-black hover:text-white transition">Blusas</button>
-        <button class="px-4 py-2 border rounded-full hover:bg-black hover:text-white transition">Casacos</button>
-        <button class="px-4 py-2 border rounded-full hover:bg-black hover:text-white transition">Calças</button>
-        <button class="px-4 py-2 border rounded-full hover:bg-black hover:text-white transition">Acessórios</button>
-      </div>
-    </section>
+<!-- FILTROS + ORDENAR -->
+<div class="relative mt-8 flex items-center">
+
+  <!-- FILTROS (CENTRO REAL) -->
+  <div class="mx-auto flex flex-wrap justify-center gap-3 text-sm">
+    <button data-filtro="todos" class="filtro px-4 py-2 border rounded-full">Todos</button>
+    <button data-filtro="blusas" class="filtro px-4 py-2 border rounded-full">Blusas</button>
+    <button data-filtro="casacos" class="filtro px-4 py-2 border rounded-full">Casacos</button>
+    <button data-filtro="calcas" class="filtro px-4 py-2 border rounded-full">Calças</button>
+    <button data-filtro="acessorios" class="filtro px-4 py-2 border rounded-full">Acessórios</button>
+  </div>
+
+  <!-- ORDENAR (DIREITA, SEM BORDA) -->
+  <div class="absolute right-0">
+    <select
+      id="ordenacao"
+      class="bg-transparent text-sm focus:outline-none cursor-pointer">
+      <option value="">Ordenar</option>
+      <option value="menor">Menor preço</option>
+      <option value="maior">Maior preço</option>
+    </select>
+  </div>
+
+</div>
 
     <!-- GRID DE PRODUTOS -->
 <section id="produtosGrid" class="grid grid-cols-1 md:grid-cols-2 gap-10">
-
-  <!-- PRODUTO DESTAQUE -->
-  <article id="produto-destaque" class="md:col-span-2 grid md:grid-cols-2 gap-8 items-center">
-    <img
-      src="/loja/produtos/blazer.jpg"
-      alt="Blazer de lã"
-      class="rounded-xl w-full object-cover"
-      id="produto-destaque-imagem"
-    >
-
-    <div>
-      <h2 id="produto-destaque-nome" class="text-2xl font-light">
-        Blazer de lã
-      </h2>
-
-      <p id="produto-destaque-preco" class="mt-2 text-lg">
-        R$ 1.200
-      </p>
-
-      <p id="produto-destaque-descricao" class="mt-4 text-gray-600">
-        Blazer de lã bege clássico. Item atemporal para qualquer guarda-roupa sofisticado.
-      </p>
-
-      <a
-        id="produto-destaque-link"
-        href="/loja/produto.html"
-        class="inline-block mt-6 px-6 py-3 border rounded-full hover:bg-black hover:text-white transition"
-      >
-        Ver na loja
-      </a>
-    </div>
-  </article>
-
-  <!-- PRODUTO 2 -->
-  <article id="produto-2">
-    <img
-      src="/loja/produtos/calca.jpg"
-      alt="Calça de lã"
-      class="rounded-xl w-full object-cover mb-4"
-      id="produto-2-imagem"
-    >
-
-    <h3 id="produto-2-nome" class="text-xl font-light">
-      Calça de lã
-    </h3>
-
-    <p id="produto-2-preco" class="mt-1">
-      R$ 1.100
-    </p>
-
-    <p id="produto-2-descricao" class="mt-3 text-gray-600 text-sm">
-      Calça de lã bege com ajuste reto. Estilo minimalista e confortável.
-    </p>
-
-    <a
-      id="produto-2-link"
-      href="/loja/produto.html"
-      class="inline-block mt-4 px-5 py-2 border rounded-full text-sm hover:bg-black hover:text-white transition"
-    >
-      Ver na loja
-    </a>
-  </article>
-
-  <!-- PRODUTO 3 -->
-  <article id="produto-3">
-    <img
-      src="/loja/produtos/bolsa.jpg"
-      alt="Bolsa de couro"
-      class="rounded-xl w-full object-cover mb-4"
-      id="produto-3-imagem"
-    >
-
-    <h3 id="produto-3-nome" class="text-xl font-light">
-      Bolsa de couro
-    </h3>
-
-    <p id="produto-3-preco" class="mt-1">
-      R$ 1.500
-    </p>
-
-    <p id="produto-3-descricao" class="mt-3 text-gray-600 text-sm">
-      Bolsa preta de couro com alça torcida. Perfeita para compor looks chiques.
-    </p>
-
-    <a
-      id="produto-3-link"
-      href="/loja/produto.html"
-      class="inline-block mt-4 px-5 py-2 border rounded-full text-sm hover:bg-black hover:text-white transition"
-    >
-      Ver na loja
-    </a>
-  </article>
 
 </section>
 
@@ -168,8 +94,31 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
+<script>
+  const header = document.getElementById('siteHeader');
+  const headerInner = document.getElementById('headerInner');
+  const logo = document.getElementById('logo');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      header.classList.add('shadow-sm');
+      headerInner.classList.remove('py-6');
+      headerInner.classList.add('py-3');
+      logo.classList.remove('h-20');
+      logo.classList.add('h-14');
+    } else {
+      header.classList.remove('shadow-sm');
+      headerInner.classList.add('py-6');
+      headerInner.classList.remove('py-3');
+      logo.classList.add('h-20');
+      logo.classList.remove('h-14');
+    }
+  });
+</script>
+
 <script src="/loja/data.js"></script>
-<script src="/loja/produto.js"></script>
+<script src="/loja/loja.js"></script>
+<script src="/js/theme.js"></script>
 
 </body>
 </html>

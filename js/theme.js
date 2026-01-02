@@ -54,3 +54,30 @@ document.addEventListener("DOMContentLoaded", () => {
   menuToggle.addEventListener("click", openMenu);
   menuClose.addEventListener("click", closeMenu);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.getElementById('siteHeader');
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+
+    // SHRINK
+    if (currentScroll > 80) {
+      header.classList.add('py-3');
+      header.classList.remove('py-5');
+    } else {
+      header.classList.add('py-5');
+      header.classList.remove('py-3');
+    }
+
+    // ESCONDE AO DESCER / MOSTRA AO SUBIR
+    if (currentScroll > lastScrollY && currentScroll > 120) {
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      header.style.transform = 'translateY(0)';
+    }
+
+    lastScrollY = currentScroll;
+  });
+});

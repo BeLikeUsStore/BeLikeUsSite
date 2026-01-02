@@ -1,26 +1,26 @@
 const produtos = [
   {
-    id: "blazer-la",
+    id: 1,
     nome: "Blazer de lã",
-    preco: "R$ 1.200",
-    descricao: "Blazer de lã bege clássico. Item atemporal para qualquer guarda-roupa sofisticado.",
+    preco: 1200,
+    categoria: "casacos",
     imagem: "/loja/produtos/blazer.jpg",
-    link: "https://link-afiliado.com/blazer"
+    descricao: "Blazer de lã bege clássico."
   },
   {
-    id: "calca-la",
+    id: 2,
     nome: "Calça de lã",
-    preco: "R$ 1.100",
-    descricao: "Calça de lã bege com ajuste reto. Estilo minimalista e confortável.",
+    preco: 1100,
+    categoria: "calcas",
     imagem: "/loja/produtos/calca.jpg",
-    link: "https://link-afiliado.com/calca"
+    descricao: "Calça minimalista de lã."
   },
   {
-    id: "bolsa-couro",
+    id: 3,
     nome: "Bolsa de couro",
-    preco: "R$ 1.500",
-    descricao: "Bolsa preta de couro com alça torcida. Perfeita para compor looks chiques.",
+    preco: 1500,
+    categoria: "acessorios",
     imagem: "/loja/produtos/bolsa.jpg",
-    link: "https://link-afiliado.com/bolsa"
+    descricao: "Bolsa de couro preta."
   }
 ];
