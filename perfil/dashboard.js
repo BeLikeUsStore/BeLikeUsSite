@@ -1,11 +1,10 @@
-import { supabase } from '/lib/supabase.js';
+import { supabase } from "/lib/supabase.js";
 
 async function verificarSessao() {
-  const { data, error } = await supabase.auth.getSession();
+  const { data } = await supabase.auth.getSession();
 
   if (!data.session) {
-    // não está logado
-    window.location.href = '/login.html';
+    window.location.href = "/perfil/login.html";
     return;
   }
 
@@ -14,9 +13,9 @@ async function verificarSessao() {
 
 async function carregarPerfil(userId) {
   const { data, error } = await supabase
-    .from('usuarios')
-    .select('nome, pontos')
-    .eq('id', userId)
+    .from("usuarios")
+    .select("email, pontos")
+    .eq("id", userId)
     .single();
 
   if (error) {
@@ -24,8 +23,13 @@ async function carregarPerfil(userId) {
     return;
   }
 
-  document.getElementById('nomeUsuario').innerText = data.nome;
-  document.getElementById('pontosUsuario').innerText = data.pontos;
+  document.getElementById("nomeUsuario").innerText = data.email;
+  document.getElementById("pontosUsuario").innerText = data.pontos;
 }
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await supabase.auth.signOut();
+  window.location.href = "/perfil/login.html";
+});
 
 verificarSessao();
