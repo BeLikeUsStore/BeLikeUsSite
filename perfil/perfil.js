@@ -14,20 +14,21 @@ form.addEventListener("submit", async (e) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-            email,
-            password,
-            tipo: 'login'}),
+        email,
+        password,
+        tipo: "login", // depois mudamos pra cadastro
+      }),
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      mensagem.textContent = data.error || "Erro ao autenticar";
+      mensagem.textContent = data.error || "Erro";
       return;
     }
 
     // sucesso
-    window.location.href = "/perfil/dashboard.html"; // você cria depois
+    window.location.href = "/perfil/dashboard.html";
 
   } catch (err) {
     mensagem.textContent = "Erro de conexão";
