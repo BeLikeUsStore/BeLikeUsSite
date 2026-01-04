@@ -13,7 +13,10 @@ form.addEventListener("submit", async (e) => {
     const res = await fetch("/api/auth.js", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+            email,
+            password,
+            tipo: 'login'}),
     });
 
     const data = await res.json();
