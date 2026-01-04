@@ -45,45 +45,9 @@ form.addEventListener("submit", async (e) => {
       return;
     }
 
+    // sucesso
     window.location.href = "/perfil/dashboard.html";
 
-  } catch (err) {
-    mensagem.textContent = "Erro de conexão";
-  }
-});
-
-const btnCadastro = document.getElementById("btnCadastro");
-
-btnCadastro.addEventListener("click", async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) {
-    mensagem.textContent = "Preencha email e senha";
-    return;
-  }
-
-  mensagem.textContent = "Criando conta...";
-
-  try {
-    const res = await fetch("/api/auth.js", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-        tipo: "cadastro",
-      }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      mensagem.textContent = data.error || "Erro ao criar conta";
-      return;
-    }
-
-    mensagem.textContent = "Conta criada! Agora é só entrar.";
   } catch (err) {
     mensagem.textContent = "Erro de conexão";
   }
