@@ -1,5 +1,23 @@
 const form = document.getElementById("authForm");
 const mensagem = document.getElementById("mensagem");
+const btnCadastro = document.getElementById("btnCadastro");
+
+let tipoAuth = "login";
+
+// alterna entre login e cadastro
+btnCadastro.addEventListener("click", () => {
+  tipoAuth = tipoAuth === "login" ? "cadastro" : "login";
+
+  btnCadastro.textContent =
+    tipoAuth === "login"
+      ? "Criar conta"
+      : "Já tenho conta";
+
+  mensagem.textContent =
+    tipoAuth === "login"
+      ? "Entrar com sua conta"
+      : "Criar nova conta";
+});
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -16,18 +34,17 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify({
         email,
         password,
-        tipo: "login", // depois mudamos pra cadastro
+        tipo: tipoAuth,
       }),
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      mensagem.textContent = data.error || "Erro";
+      mensagem.textContent = data.error || "Erro ao autenticar";
       return;
     }
 
-    // sucesso
     window.location.href = "/perfil/dashboard.html";
 
   } catch (err) {
