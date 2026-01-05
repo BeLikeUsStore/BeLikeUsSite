@@ -43,3 +43,29 @@ if (logoutBtn) {
 }
 
 verificarSessao();
+
+// TOGGLE MOBILE
+const toggleMobile = document.getElementById("perfilToggleMobile");
+const dropdownMobile = document.getElementById("perfilDropdownMobile");
+
+if (toggleMobile && dropdownMobile) {
+  toggleMobile.addEventListener("click", () => {
+    dropdownMobile.classList.toggle("hidden");
+  });
+}
+
+const menuLogadoMobile = document.getElementById("menuLogadoMobile");
+const menuDeslogadoMobile = document.getElementById("menuDeslogadoMobile");
+
+menuLogado?.classList.remove("hidden");
+menuDeslogado?.classList.add("hidden");
+
+menuLogadoMobile?.classList.remove("hidden");
+menuDeslogadoMobile?.classList.add("hidden");
+
+document
+  .getElementById("logoutBtnMobile")
+  ?.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/";
+  });

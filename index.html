@@ -210,6 +210,60 @@
     <a href="/loja/index.html" class="border-b pb-2">Loja</a>
 
   </div>
+  
+  <!-- PERFIL MOBILE -->
+<div class="border-b pb-6 mb-6">
+
+  <!-- AVATAR -->
+  <button
+    id="perfilToggleMobile"
+    class="w-12 h-12 mx-auto rounded-full border border-black flex items-center justify-center hover:bg-black group transition"
+    aria-label="Menu do perfil"
+  >
+    <svg
+      class="w-6 h-6 text-black group-hover:text-white"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      viewBox="0 0 24 24"
+    >
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+    </svg>
+  </button>
+
+  <!-- DROPDOWN MOBILE -->
+  <div
+    id="perfilDropdownMobile"
+    class="hidden mt-4 text-center text-base"
+  >
+
+    <!-- NÃO LOGADO -->
+    <div id="menuDeslogadoMobile">
+      <a href="/perfil/login.html" class="block py-2 hover:underline">
+        Entrar
+      </a>
+      <a href="/perfil/login.html" class="block py-2 hover:underline">
+        Criar conta
+      </a>
+    </div>
+
+    <!-- LOGADO -->
+    <div id="menuLogadoMobile" class="hidden">
+      <a href="/perfil/dashboard.html" class="block py-2 hover:underline">
+        Perfil
+      </a>
+      <button
+        id="logoutBtnMobile"
+        class="w-full py-2 hover:underline"
+      >
+        Sair
+      </button>
+    </div>
+
+  </div>
+
+</div>
 </div>
 
 <main class="container-max">
