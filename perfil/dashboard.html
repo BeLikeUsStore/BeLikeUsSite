@@ -8,54 +8,225 @@
 
 <body class="bg-[#f7f7f7] min-h-screen">
 
-<header class="border-b border-gray-200 bg-white">
-  <div class="container-max relative flex items-center justify-center md:justify-between py-5">
-    <a href="/" class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
-  <img src="/public/logo.png" alt="Logotipo Be Like Us" class="h-20 w-auto object-contain" />
-    </a>
+  <!-- HEADER (já correto, não mexi) -->
+  <header class="border-b border-gray-200 bg-white">
+    <div class="container-max relative flex items-center justify-center md:justify-between py-5">
+      <a href="/" class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+        <img src="/public/logo.png" alt="Logotipo Be Like Us" class="h-20 w-auto object-contain" />
+      </a>
 
-    <nav class="hidden md:flex items-center gap-6 text-sm">
-      <a href="/blog/index.html" class="hover:underline">Do blog</a>
-      <a href="/sobre/index.html" class="hover:underline">Sobre</a>
-      <a href="/contato/index.html" class="hover:underline">Contato</a>
-      <a href="/loja/index.html" class="hover:underline">Loja</a>
-      <button id="logoutBtn" class="text-sm text-gray-600 hover:text-black">Sair</button>
-      <button id="themeToggle" class="theme-toggle px-3 py-1 border rounded text-xs">🌙</button>
-    </nav>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="/blog/index.html" class="hover:underline">Do blog</a>
+        <a href="/sobre/index.html" class="hover:underline">Sobre</a>
+        <a href="/contato/index.html" class="hover:underline">Contato</a>
+        <a href="/loja/index.html" class="hover:underline">Loja</a>
+        <button id="logoutBtn" class="text-sm text-gray-600 hover:text-black">Sair</button>
+        <button id="themeToggle" class="theme-toggle px-3 py-1 border rounded text-xs">🌙</button>
+      </nav>
 
-<div class="absolute left-0 md:hidden">
-  <button id="menuToggle" aria-label="Abrir menu">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round">
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  </button>
-</div>
+      <div class="absolute left-0 md:hidden">
+        <button id="menuToggle" aria-label="Abrir menu">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN (conteúdo principal do perfil) -->
+  <main class="relative">
+
+    <!-- SEÇÃO PERFIL -->
+    <section class="relative">
+
+      <!-- BANNER -->
+       <div
+        id="bannerUsuario"
+        class="w-full h-40 bg-black"
+        aria-label="Banner do perfil"
+      ></div>
+
+      <!-- CARD PERFIL -->
+      <div class="max-w-md mx-auto bg-white rounded-2xl shadow-sm -mt-16 p-6 text-center relative">
+
+        <!-- AVATAR -->
+        <div
+          id="avatarUsuario"
+          class="w-24 h-24 mx-auto rounded-full bg-gray-300 border-4 border-white -mt-20"
+          aria-label="Foto de perfil"
+        ></div>
+
+        <!-- NOME -->
+        <h1 id="nomeUsuario" class="mt-4 text-xl font-light">
+          Nome do usuário
+        </h1>
+
+        <!-- PONTOS -->
+        <div class="mt-2 text-gray-600">
+          <span id="pontosUsuario" class="font-medium text-black">0</span> moedas
+        </div>
+
+      </div>
+    </section>
+
+<!-- FEED + TAREFAS -->
+<section class="max-w-6xl mx-auto mt-12 px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+
+  <!-- COLUNA ESQUERDA — FEED -->
+  <div class="md:col-span-2 space-y-6">
+
+    <article class="bg-white rounded-2xl shadow-sm p-6">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-10 h-10 rounded-full bg-gray-300"></div>
+        <div>
+          <p class="text-sm font-medium">Nome do usuário</p>
+          <p class="text-xs text-gray-500">há 2 horas</p>
+        </div>
+      </div>
+
+      <p class="text-gray-700 text-sm leading-relaxed">
+        Explorando novas referências estéticas hoje.
+      </p>
+    </article>
+
+    <article class="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div class="w-full h-64 bg-gray-200"></div>
+      <div class="p-6 text-sm text-gray-700">
+        Novo look montado com peças da curadoria.
+      </div>
+    </article>
+
+    <article class="bg-white rounded-2xl shadow-sm p-8 text-center text-gray-500 text-sm">
+      Ainda não há postagens.
+    </article>
 
   </div>
-</header>
 
-  <!-- BANNER -->
-  <div class="w-full h-40 bg-black relative"></div>
+<!-- COLUNA DIREITA — MOEDAS + TAREFAS -->
+<aside class="md:col-span-1 space-y-6">
 
-  <!-- CONTAINER PERFIL -->
-  <div class="max-w-md mx-auto bg-white rounded-2xl shadow-sm -mt-16 p-6 text-center">
+  <!-- MOEDAS -->
+  <div class="bg-white rounded-2xl shadow-sm p-6 flex items-center gap-5">
 
-    <!-- AVATAR -->
-    <div class="w-24 h-24 mx-auto rounded-full bg-gray-300 border-4 border-white -mt-20"></div>
+    <!-- ÍCONE DA MOEDA -->
+    <div class="w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center">
+      <!-- futuramente: <img src="/public/moeda.png" /> -->
+    </div>
 
-    <!-- NOME -->
-    <h1 id="nomeUsuario" class="mt-4 text-xl font-light">
-      Nome do usuário
-    </h1>
-
-    <!-- PONTOS -->
-    <div class="mt-2 text-gray-600">
-      <span id="pontosUsuario" class="font-medium text-black">0</span> moedas
+    <div>
+      <p class="text-sm text-gray-500">Suas moedas</p>
+      <p class="text-2xl font-light">
+        <span id="pontosUsuario">0</span>
+      </p>
     </div>
 
   </div>
+
+  <!-- TAREFAS -->
+  <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
+
+    <h2 class="text-lg font-light mb-4">
+      Tarefas diárias
+    </h2>
+
+    <ul class="space-y-4">
+
+      <li class="flex items-center justify-between border rounded-xl p-4">
+        <div>
+          <p class="text-sm font-medium">Login diário</p>
+          <p class="text-xs text-gray-500">+50 moedas</p>
+        </div>
+        <span class="text-xs text-gray-400">✔</span>
+      </li>
+
+      <li class="flex items-center justify-between border rounded-xl p-4">
+        <div>
+          <p class="text-sm font-medium">Ler artigo</p>
+          <p class="text-xs text-gray-500">0/1 · +20</p>
+        </div>
+      </li>
+
+      <li class="flex items-center justify-between border rounded-xl p-4">
+        <div>
+          <p class="text-sm font-medium">Ver itens na loja</p>
+          <p class="text-xs text-gray-500">0/15 · +150</p>
+        </div>
+      </li>
+
+    </ul>
+
+  </div>
+
+</aside>
+
+</section>
+
+    <!-- OUTRAS SEÇÕES FUTURAS -->
+    <!-- tarefas, histórico, recompensas, etc -->
+
+  </main>
+
+<!-- FOOTER -->
+<footer class="border-t mt-10">
+
+  <!-- Redes Sociais -->
+<div class="flex items-center gap-6 mt-10">
+
+  <!-- Instagram -->
+  <a href="#" class="w-12 h-12 rounded-full border flex items-center justify-center transition hover:bg-black group">
+    <svg class="w-5 h-5 text-black group-hover:text-white"
+         fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+      <rect x="2" y="2" width="20" height="20" rx="6"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17" cy="7" r="1"/>
+    </svg>
+  </a>
+
+  <!-- TikTok -->
+  <a href="#" class="w-12 h-12 rounded-full border flex items-center justify-center transition hover:bg-black group">
+    <svg class="w-5 h-5 text-black group-hover:text-white"
+         fill="currentColor" viewBox="0 0 256 256">
+      <path d="M168.5 0h39.7c2.7 30 21.9 48.6 47.8 50.9v39.4c-16.9.9-33-3.7-47.3-12.9v78.9c0 52.4-42.5 95-94.9 95S19 208.7 19 156.3c0-52.4 42.5-95 94.9-95 5.6 0 11.2.5 16.5 1.5v39.2c-5.2-1.3-10.7-2-16.3-2-30.5 0-55.2 24.7-55.2 55.2 0 30.5 24.7 55.2 55.2 55.2s55.2-24.7 55.2-55.2V0z"/>
+    </svg>
+  </a>
+
+  <!-- X -->
+  <a href="#" class="w-12 h-12 rounded-full border flex items-center justify-center transition hover:bg-black group">
+    <svg class="w-5 h-5 text-black group-hover:text-white"
+         fill="currentColor" viewBox="0 0 24 24">
+      <path d="M18 2h4l-8 9 8 11h-4l-6-8-6 8H2l8-11L2 2h4l6 8z"/>
+    </svg>
+  </a>
+
+  <!-- Facebook -->
+  <a href="#" class="w-12 h-12 rounded-full border flex items-center justify-center transition hover:bg-black group">
+    <svg class="w-5 h-5 text-black group-hover:text-white"
+         fill="currentColor" viewBox="0 0 24 24">
+      <path d="M13 22V12h3l1-4h-4V6c0-.9.3-2 2-2h2V0h-3c-3 0-5 2.2-5 6v2H7v4h3v10h3z"/>
+    </svg>
+  </a>
+
+  <!-- Pinterest -->
+  <a href="#" class="w-12 h-12 rounded-full border flex items-center justify-center transition hover:bg-black group">
+    <svg class="w-5 h-5 text-black group-hover:text-white"
+         fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12.04 0C5.39 0 .04 5.22.04 11.76c0 4.79 3.03 8.89 7.3 10.41-.1-.88-.2-2.23 0-3.19.22-.76 1.43-4.84 1.43-4.84s-.37-.76-.37-1.88c0-1.76 1.02-3.08 2.29-3.08 1.08 0 1.6.81 1.6 1.78 0 1.08-.69 2.7-1.05 4.19-.3 1.27.64 2.31 1.9 2.31 2.28 0 3.82-2.9 3.82-6.34 0-2.61-1.76-4.56-4.95-4.56-3.6 0-5.84 2.69-5.84 5.7 0 1.04.3 1.79.77 2.36.22.26.25.37.17.67-.06.22-.2.76-.26.97-.08.3-.32.41-.59.3-1.64-.67-2.4-2.55-2.4-4.63 0-3.46 2.92-7.57 8.71-7.57 4.65 0 7.72 3.36 7.72 6.97 0 4.78-2.67 8.33-6.61 8.33-1.32 0-2.86-.72-3.34-1.52l-.91 3.45c-.33 1.26-1.23 2.85-1.83 3.82 1.37.42 2.82.65 4.33.65 6.65 0 12-5.22 12-11.76C24.04 5.22 18.69 0 12.04 0z"/>
+    </svg>
+  </a>
+
+</div>
+
+  <div class="container-max flex flex-col md:flex-row items-center justify-between py-6 text-xs text-gray-500">
+    <div>© <span id="year"></span> BE LIKE US.</div>
+    <div class="flex gap-4 mt-3 md:mt-0">
+      <a href="/sobre/index.html" class="hover:underline">Sobre</a>
+      <a href="/contato/index.html" class="hover:underline">Contato</a>
+    </div>
+  </div>
+</footer>
 
   <script type="module" src="/perfil/dashboard.js"></script>
 
