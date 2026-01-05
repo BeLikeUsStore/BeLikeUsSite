@@ -4,14 +4,37 @@
   <meta charset="UTF-8" />
   <title>Meu Perfil</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <button id="logoutBtn">
-  Sair
-</button>
-
 </head>
 
 <body class="bg-[#f7f7f7] min-h-screen">
+
+<header class="border-b border-gray-200 bg-white">
+  <div class="container-max relative flex items-center justify-center md:justify-between py-5">
+    <a href="/" class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+  <img src="/public/logo.png" alt="Logotipo Be Like Us" class="h-20 w-auto object-contain" />
+    </a>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm">
+      <a href="/blog/index.html" class="hover:underline">Do blog</a>
+      <a href="/sobre/index.html" class="hover:underline">Sobre</a>
+      <a href="/contato/index.html" class="hover:underline">Contato</a>
+      <a href="/loja/index.html" class="hover:underline">Loja</a>
+      <button id="logoutBtn" class="text-sm text-gray-600 hover:text-black">Sair</button>
+      <button id="themeToggle" class="theme-toggle px-3 py-1 border rounded text-xs">🌙</button>
+    </nav>
+
+<div class="absolute left-0 md:hidden">
+  <button id="menuToggle" aria-label="Abrir menu">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+</div>
+
+  </div>
+</header>
 
   <!-- BANNER -->
   <div class="w-full h-40 bg-black relative"></div>
