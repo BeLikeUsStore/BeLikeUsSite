@@ -1,8 +1,11 @@
+import { supabase } from "/lib/supabase.js";
+
 const toggle = document.getElementById("perfilToggle");
 const dropdown = document.getElementById("perfilDropdown");
 
 const menuLogado = document.getElementById("menuLogado");
 const menuDeslogado = document.getElementById("menuDeslogado");
+const logoutBtn = document.getElementById("logoutBtn");
 
 // abrir / fechar dropdown
 toggle.addEventListener("click", () => {
@@ -16,14 +19,27 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// ===== ESTADO TEMPORÁRIO =====
-// depois isso vem do Supabase
-const usuarioLogado = false; // MUDE PARA true PRA TESTAR
+// ===== SUPABASE AUTH =====
+async function verificarSessao() {
+  const { data } = await supabase.auth.getSession();
 
-if (usuarioLogado) {
-  menuLogado.classList.remove("hidden");
-  menuDeslogado.classList.add("hidden");
-} else {
-  menuDeslogado.classList.remove("hidden");
-  menuLogado.classList.add("hidden");
+  if (data.session) {
+    // LOGADO
+    menuLogado.classList.remove("hidden");
+    menuDeslogado.classList.add("hidden");
+  } else {
+    // DESLOGADO
+    menuDeslogado.classList.remove("hidden");
+    menuLogado.classList.add("hidden");
+  }
 }
+
+// logout real
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/";
+  });
+}
+
+verificarSessao();
