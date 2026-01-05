@@ -20,8 +20,59 @@
         <a href="/sobre/index.html" class="hover:underline">Sobre</a>
         <a href="/contato/index.html" class="hover:underline">Contato</a>
         <a href="/loja/index.html" class="hover:underline">Loja</a>
-        <button id="logoutBtn" class="text-sm text-gray-600 hover:text-black">Sair</button>
         <button id="themeToggle" class="theme-toggle px-3 py-1 border rounded text-xs">🌙</button>
+        <!-- PERFIL -->
+<div class="relative" id="perfilMenu">
+
+  <!-- BOTÃO AVATAR -->
+  <button
+    id="perfilToggle"
+    class="w-10 h-10 rounded-full border border-black flex items-center justify-center hover:bg-black group transition"
+    aria-label="Menu do perfil"
+  >
+    <svg
+      class="w-5 h-5 text-black group-hover:text-white"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      viewBox="0 0 24 24"
+    >
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+    </svg>
+  </button>
+
+  <!-- DROPDOWN -->
+  <div
+    id="perfilDropdown"
+    class="hidden absolute right-0 mt-3 w-44 bg-white border rounded-xl shadow-sm overflow-hidden text-sm z-50"
+  >
+
+    <!-- NÃO LOGADO -->
+    <div id="menuDeslogado">
+      <a href="/perfil/login.html" class="block px-4 py-3 hover:bg-gray-100">
+        Entrar
+      </a>
+      <a href="/perfil/login.html" class="block px-4 py-3 hover:bg-gray-100">
+        Criar conta
+      </a>
+    </div>
+
+    <!-- LOGADO -->
+    <div id="menuLogado" class="hidden">
+      <a href="/perfil/dashboard.html" class="block px-4 py-3 hover:bg-gray-100">
+        Perfil
+      </a>
+      <button
+        id="logoutBtn"
+        class="w-full text-left px-4 py-3 hover:bg-gray-100"
+      >
+        Sair
+      </button>
+    </div>
+
+  </div>
+</div>
       </nav>
 
       <div class="absolute left-0 md:hidden">
@@ -229,6 +280,7 @@
 </footer>
 
   <script type="module" src="/perfil/dashboard.js"></script>
+  <script src="/js/perfil-menu.js"></script>
 
 </body>
 </html>
