@@ -33,3 +33,36 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 });
 
 verificarSessao();
+
+async function ganharPontos(tipo) {
+  // 1. pega a sessão atual
+  const { data } = await supabase.auth.getSession();
+
+  if (!data.session) {
+    alert("Sessão expirada");
+    return;
+  }
+
+  const token = data.session.access_token;
+
+  // 2. chama a API segura
+  const response = await fetch("/api/pontos", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({ tipo })
+  });
+
+  const result = await response.json();
+
+  // 3. trata erro
+  if (!response.ok) {
+    console.error(result.error);
+    return;
+  }
+
+  // 4. atualiza a UI com os novos pontos
+  document.getElementById("pontosUsuario").innerText = result.pontos;
+}
