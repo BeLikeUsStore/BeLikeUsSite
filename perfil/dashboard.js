@@ -11,10 +11,19 @@ async function verificarSessao() {
   carregarPerfil(data.session.user.id);
 }
 
+/**
+ * ============================
+ * CARREGAR PERFIL DO USUÁRIO
+ * ============================
+ * - Busca username, email e pontos
+ * - Mostra username
+ * - Se não existir username (usuários antigos),
+ *   usa email como fallback
+ */
 async function carregarPerfil(userId) {
   const { data, error } = await supabase
     .from("usuarios")
-    .select("email, pontos")
+    .select("email, username, pontos")
     .eq("id", userId)
     .single();
 
@@ -23,10 +32,23 @@ async function carregarPerfil(userId) {
     return;
   }
 
-  document.getElementById("nomeUsuario").innerText = data.email;
+  // prioridade: username > email
+  const nomeExibido = data.username || data.email;
+
+  // nome principal (card do perfil)
+  document.getElementById("nomeUsuario").innerText = nomeExibido;
+
+  // nome no feed
+  const nomeFeed = document.getElementById("nomeUsuarioFeed");
+  if (nomeFeed) {
+    nomeFeed.innerText = nomeExibido;
+  }
+
+  // pontos
   document.getElementById("pontosUsuario").innerText = data.pontos;
 }
 
+// logout
 document.getElementById("logoutBtn").addEventListener("click", async () => {
   await supabase.auth.signOut();
   window.location.href = "/perfil/login.html";
@@ -34,8 +56,12 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 
 verificarSessao();
 
+/**
+ * ============================
+ * GANHAR PONTOS (API SEGURA)
+ * ============================
+ */
 async function ganharPontos(tipo) {
-  // 1. pega a sessão atual
   const { data } = await supabase.auth.getSession();
 
   if (!data.session) {
@@ -45,7 +71,6 @@ async function ganharPontos(tipo) {
 
   const token = data.session.access_token;
 
-  // 2. chama a API segura
   const response = await fetch("/api/pontos", {
     method: "POST",
     headers: {
@@ -57,12 +82,10 @@ async function ganharPontos(tipo) {
 
   const result = await response.json();
 
-  // 3. trata erro
   if (!response.ok) {
     console.error(result.error);
     return;
   }
 
-  // 4. atualiza a UI com os novos pontos
   document.getElementById("pontosUsuario").innerText = result.pontos;
 }

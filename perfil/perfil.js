@@ -45,8 +45,14 @@ form.addEventListener("submit", async (e) => {
       return;
     }
 
-    // sucesso
-    window.location.href = "/perfil/dashboard.html";
+if (tipoAuth === "cadastro") {
+  mensagem.textContent =
+    "Conta criada! Confirme seu email para continuar.";
+  return;
+}
+
+// login direto
+window.location.href = "/perfil/dashboard.html";
 
   } catch (err) {
     mensagem.textContent = "Erro de conexão";
