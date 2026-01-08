@@ -1,3 +1,5 @@
+import { supabase } from "/lib/supabase.js";
+
 const form = document.getElementById("authForm");
 const mensagem = document.getElementById("mensagem");
 const btnCadastro = document.getElementById("btnCadastro");
@@ -19,6 +21,7 @@ btnCadastro.addEventListener("click", () => {
       : "Criar nova conta";
 });
 
+// submit do formulário
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -28,33 +31,42 @@ form.addEventListener("submit", async (e) => {
   mensagem.textContent = "Carregando...";
 
   try {
-    const res = await fetch("/api/auth.js", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    let result;
+
+    if (tipoAuth === "login") {
+      result = await supabase.auth.signInWithPassword({
         email,
         password,
-        tipo: tipoAuth,
-      }),
-    });
+      });
+    } else {
+      result = await supabase.auth.signUp({
+        email,
+        password,
+      });
+    }
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      mensagem.textContent = data.error || "Erro ao autenticar";
+    if (result.error) {
+      mensagem.textContent = result.error.message;
       return;
     }
 
-if (tipoAuth === "cadastro") {
-  mensagem.textContent =
-    "Conta criada! Confirme seu email para continuar.";
-  return;
-}
+    // cadastro exige confirmação
+    if (tipoAuth === "cadastro") {
+      mensagem.textContent =
+        "Conta criada! Confirme seu email para continuar.";
+      return;
+    }
 
-// login direto
-window.location.href = "/perfil/dashboard.html";
+    // login: sessão já nasce no browser
+    const { data } = await supabase.auth.getSession();
+
+    if (data.session) {
+      window.location.href = "/perfil/dashboard.html";
+    } else {
+      mensagem.textContent = "Erro ao iniciar sessão";
+    }
 
   } catch (err) {
-    mensagem.textContent = "Erro de conexão";
+    mensagem.textContent = "Erro inesperado";
   }
 });
