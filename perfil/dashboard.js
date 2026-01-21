@@ -89,3 +89,27 @@ async function ganharPontos(tipo) {
 
   document.getElementById("pontosUsuario").innerText = result.pontos;
 }
+
+// ============================
+// MODAL CONFIG CONTA
+// ============================
+const abrirBtn = document.getElementById("abrirConfigConta");
+const modal = document.getElementById("modalConfigConta");
+const fecharBtn = document.getElementById("fecharConfigConta");
+
+// abrir
+abrirBtn?.addEventListener("click", () => {
+  modal.classList.remove("hidden");
+});
+
+// fechar
+fecharBtn?.addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
+
+// fechar clicando fora
+modal?.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.classList.add("hidden");
+  }
+});
