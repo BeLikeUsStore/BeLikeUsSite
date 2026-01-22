@@ -8,17 +8,17 @@ async function verificarSessao() {
     return;
   }
 
-  carregarPerfil(data.session.user.id);
+  // carrega perfil
+  await carregarPerfil(data.session.user.id);
+
+  // 🔥 LOGIN DIÁRIO (+50)
+  ganharPontos("login_diario");
 }
 
 /**
  * ============================
  * CARREGAR PERFIL DO USUÁRIO
  * ============================
- * - Busca username, email e pontos
- * - Mostra username
- * - Se não existir username (usuários antigos),
- *   usa email como fallback
  */
 async function carregarPerfil(userId) {
   const { data, error } = await supabase
@@ -32,42 +32,31 @@ async function carregarPerfil(userId) {
     return;
   }
 
-  // prioridade: username > email
   const nomeExibido = data.username || data.email;
 
-  // nome principal (card do perfil)
   document.getElementById("nomeUsuario").innerText = nomeExibido;
 
-  // nome no feed
   const nomeFeed = document.getElementById("nomeUsuarioFeed");
-  if (nomeFeed) {
-    nomeFeed.innerText = nomeExibido;
-  }
+  if (nomeFeed) nomeFeed.innerText = nomeExibido;
 
-  // pontos
   document.getElementById("pontosUsuario").innerText = data.pontos;
 }
 
-// logout
-document.getElementById("logoutBtn").addEventListener("click", async () => {
+// ============================
+// LOGOUT
+// ============================
+document.getElementById("logoutBtn")?.addEventListener("click", async () => {
   await supabase.auth.signOut();
   window.location.href = "/perfil/login.html";
 });
 
-verificarSessao();
-
-/**
- * ============================
- * GANHAR PONTOS (API SEGURA)
- * ============================
- */
+// ============================
+// GANHAR PONTOS (API SEGURA)
+// ============================
 async function ganharPontos(tipo) {
   const { data } = await supabase.auth.getSession();
 
-  if (!data.session) {
-    alert("Sessão expirada");
-    return;
-  }
+  if (!data.session) return;
 
   const token = data.session.access_token;
 
@@ -83,11 +72,13 @@ async function ganharPontos(tipo) {
   const result = await response.json();
 
   if (!response.ok) {
-    console.error(result.error);
+    console.warn("Pontos não creditados:", result.error);
     return;
   }
 
-  document.getElementById("pontosUsuario").innerText = result.pontos;
+  // atualiza pontos na UI
+  const pontosEl = document.getElementById("pontosUsuario");
+  if (pontosEl) pontosEl.innerText = result.pontos;
 }
 
 // ============================
@@ -97,19 +88,17 @@ const abrirBtn = document.getElementById("abrirConfigConta");
 const modal = document.getElementById("modalConfigConta");
 const fecharBtn = document.getElementById("fecharConfigConta");
 
-// abrir
 abrirBtn?.addEventListener("click", () => {
   modal.classList.remove("hidden");
 });
 
-// fechar
 fecharBtn?.addEventListener("click", () => {
   modal.classList.add("hidden");
 });
 
-// fechar clicando fora
 modal?.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    modal.classList.add("hidden");
-  }
+  if (e.target === modal) modal.classList.add("hidden");
 });
+
+// INIT
+verificarSessao();
