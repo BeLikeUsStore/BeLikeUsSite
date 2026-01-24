@@ -1,12 +1,11 @@
-import { createClient } from "@supabase/supabase-js";
+const { createClient } = require("@supabase/supabase-js");
 
-export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabase = createClient(
+  process.env.VITE_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método não permitido" });
   }
@@ -21,8 +20,10 @@ export default async function handler(req, res) {
 
   const token = authHeader.replace("Bearer ", "");
 
-  const { data: { user }, error: authError } =
-    await supabase.auth.getUser(token);
+  const {
+    data: { user },
+    error: authError
+  } = await supabase.auth.getUser(token);
 
   if (authError || !user) {
     return res.status(401).json({ error: "Token inválido" });
@@ -90,7 +91,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Produto inválido" });
     }
 
-    // já visitou este produto hoje?
     const { data: jaVisitou } = await supabase
       .from("pontos_historico")
       .select("id")
@@ -105,14 +105,12 @@ export default async function handler(req, res) {
       return res.status(200).json({ status: "produto_ja_contado" });
     }
 
-    // registra visita
     await supabase.from("pontos_historico").insert({
       user_id: user.id,
       tipo: "visita_loja",
       produto_id
     });
 
-    // conta produtos únicos hoje
     const { count } = await supabase
       .from("pontos_historico")
       .select("id", { count: "exact", head: true })
@@ -141,4 +139,4 @@ export default async function handler(req, res) {
     .eq("id", user.id);
 
   return res.status(200).json({ pontos: novosPontos });
-}
+};
