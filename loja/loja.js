@@ -1,3 +1,4 @@
+import { produtos } from "./data.js";
 // ===== ELEMENTOS =====
 const grid = document.getElementById("produtosGrid");
 const filtros = document.querySelectorAll("[data-filtro]");

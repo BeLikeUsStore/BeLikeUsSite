@@ -1,5 +1,5 @@
 import { supabase } from "/lib/supabase.js";
-
+import { produtos } from "./data.js";
 // ============================
 // PEGAR ID DO PRODUTO
 // ============================
