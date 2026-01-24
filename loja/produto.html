@@ -1,13 +1,113 @@
-  <script type="importmap">
-{
-  "imports": {
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
-  }
-}
-</script>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<main class="min-h-screen py-20 bg-[#f7f7f7]">
-  <div id="produtoContainer" class="max-w-4xl mx-auto bg-white rounded-2xl p-10"></div>
+  <script type="importmap">
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+    }
+  }
+  </script>
+
+  <title>Produto — Be Like Us</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .container-max { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  </style>
+</head>
+
+<body class="bg-white text-black antialiased">
+
+<header class="border-b border-gray-200 bg-white sticky top-0 z-50">
+  <div class="container-max relative flex items-center justify-center md:justify-between py-5">
+    <a href="/" class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+      <img src="/public/logo.png" alt="Logotipo Be Like Us" class="h-16 w-auto object-contain" />
+    </a>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm">
+      <a href="/blog/index.html" class="hover:underline">Do blog</a>
+      <a href="/loja/index.html" class="hover:underline font-bold">Loja</a>
+      <a href="/sobre/index.html" class="hover:underline">Sobre</a>
+      <div class="relative" id="perfilMenu">
+        <button id="perfilToggle" class="w-10 h-10 rounded-full border border-black flex items-center justify-center hover:bg-black group transition">
+          <svg class="w-5 h-5 text-black group-hover:text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+          </svg>
+        </button>
+        <div id="perfilDropdown" class="hidden absolute right-0 mt-3 w-44 bg-white border rounded-xl shadow-sm overflow-hidden text-sm z-50">
+            <div id="menuDeslogado">
+                <a href="/perfil/login.html" class="block px-4 py-3 hover:bg-gray-100">Entrar</a>
+            </div>
+            <div id="menuLogado" class="hidden">
+                <a href="/perfil/dashboard.html" class="block px-4 py-3 hover:bg-gray-100">Perfil</a>
+                <button id="logoutBtn" class="w-full text-left px-4 py-3 hover:bg-gray-100">Sair</button>
+            </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="absolute left-6 md:hidden">
+      <button id="menuToggle"><svg width="24" height="24" fill="none" stroke="black" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div id="mobileMenu" class="fixed inset-0 bg-white z-[60] hidden flex flex-col p-8">
+    <button id="menuClose" class="self-end text-2xl">✕</button>
+    <nav class="flex flex-col gap-6 text-xl mt-10">
+        <a href="/blog/index.html">Do blog</a>
+        <a href="/loja/index.html">Loja</a>
+        <a href="/perfil/dashboard.html">Meu Perfil</a>
+        <a href="/">Home</a>
+    </nav>
+</div>
+
+<main class="min-h-screen py-12 md:py-20 bg-[#f7f7f7]">
+  <div class="container-max">
+    <a href="/loja/index.html" class="inline-flex items-center text-sm mb-8 hover:underline text-gray-500">
+        ← Voltar para a curadoria
+    </a>
+    
+    <div id="produtoContainer" class="bg-white rounded-3xl overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-10 p-4 md:p-10">
+        <div class="animate-pulse flex flex-col gap-4">
+            <div class="bg-gray-200 h-96 rounded-2xl"></div>
+            <div class="h-8 bg-gray-200 w-1/2 rounded"></div>
+        </div>
+    </div>
+  </div>
 </main>
 
+<footer class="border-t bg-white">
+  <div class="container-max flex flex-col md:flex-row items-center justify-between py-10 text-xs text-gray-400">
+    <div>© <span id="year"></span> BE LIKE US.</div>
+    <div class="flex gap-6 mt-4 md:mt-0">
+      <a href="/sobre/index.html">Sobre</a>
+      <a href="/contato/index.html">Contato</a>
+    </div>
+  </div>
+</footer>
+
 <script type="module" src="/loja/produto.js"></script>
+<script type="module" src="/js/perfil-menu.js"></script>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  
+  // Script rápido para o menu mobile funcionar nesta página também
+  const openBtn = document.getElementById("menuToggle");
+  const closeBtn = document.getElementById("menuClose");
+  const menu = document.getElementById("mobileMenu");
+
+  openBtn?.addEventListener("click", () => menu.classList.remove("hidden"));
+  closeBtn?.addEventListener("click", () => menu.classList.add("hidden"));
+</script>
+
+</body>
+</html>
