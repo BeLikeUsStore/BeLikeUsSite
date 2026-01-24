@@ -8,12 +8,71 @@ async function verificarSessao() {
     return;
   }
 
-  // Carrega perfil visualmente (nome, email, etc)
-  await carregarPerfil(data.session.user.id);
+  const userId = data.session.user.id;
+  const token = data.session.access_token;
 
-  // 🔥 LOGIN DIÁRIO OTIMIZADO
-  // Só chama a função se ainda não tiver processado hoje
-  await processarLoginDiario(data.session.access_token);
+  // 1. Carrega dados básicos
+  await carregarPerfil(userId);
+
+  // 2. Processa o login diário (pontuação)
+  await processarLoginDiario(token);
+
+  // 3. 🔥 NOVO: Atualiza o visual das barras de progresso
+  await atualizarProgressoTarefas(userId);
+}
+
+/**
+ * ==========================================
+ * ATUALIZAR VISUAL DAS TAREFAS (Barras e X/Y)
+ * ==========================================
+ */
+async function atualizarProgressoTarefas(userId) {
+  const hoje = new Date().toISOString().slice(0, 10);
+
+  // Buscamos o histórico de hoje para contar o progresso
+  const { data: historico, error } = await supabase
+    .from("pontos_historico")
+    .select("tipo, produto_id")
+    .eq("user_id", userId)
+    .gte("created_at", `${hoje}T00:00:00`)
+    .lte("created_at", `${hoje}T23:59:59`);
+
+  if (error) return console.error("Erro ao buscar progresso:", error);
+
+  // --- PROGRESSO LOGIN ---
+  const jaFezLogin = localStorage.getItem("ultimo_login_diario_data") === hoje;
+  if (jaFezLogin) {
+    document.getElementById("check-login")?.classList.remove("hidden");
+    const bar = document.getElementById("progresso-login-bar");
+    if (bar) bar.style.width = "100%";
+  }
+
+  // --- PROGRESSO ARTIGO ---
+  const leuArtigo = historico.some(item => item.tipo === "ler_artigo");
+  const progressoArtigo = leuArtigo ? 1 : 0;
+  
+  const textoArtigo = document.getElementById("progresso-artigo-texto");
+  if (textoArtigo) textoArtigo.innerText = `${progressoArtigo}/1`;
+  
+  const barArtigo = document.getElementById("progresso-artigo-bar");
+  if (barArtigo) barArtigo.style.width = leuArtigo ? "100%" : "0%";
+
+  // --- PROGRESSO LOJA (0/15) ---
+  const visitasLoja = historico.filter(item => item.tipo === "visita_loja").length;
+  // Limitamos a 15 para a barra não passar de 100%
+  const visitasLimitadas = Math.min(visitasLoja, 15);
+  const porcentagemLoja = (visitasLimitadas / 15) * 100;
+
+  const textoLoja = document.getElementById("progresso-loja-texto");
+  if (textoLoja) textoLoja.innerText = `${visitasLoja}/15`;
+
+  const barLoja = document.getElementById("progresso-loja-bar");
+  if (barLoja) barLoja.style.width = `${porcentagemLoja}%`;
+  
+  // Se completou os 15, podemos mudar a cor para verde ou manter preto
+  if (visitasLoja >= 15 && barLoja) {
+    barLoja.classList.replace("bg-black", "bg-green-500");
+  }
 }
 
 /**
@@ -22,24 +81,19 @@ async function verificarSessao() {
  * ============================
  */
 async function processarLoginDiario(token) {
-  const hoje = new Date().toISOString().slice(0, 10); // Formato YYYY-MM-DD
+  const hoje = new Date().toISOString().slice(0, 10);
   const ultimoLogin = localStorage.getItem("ultimo_login_diario_data");
 
-  // SE JÁ TEM NO LOCALSTORAGE A DATA DE HOJE, ABORTA (Não gasta API)
-  if (ultimoLogin === hoje) {
-    console.log("Login diário já validado localmente hoje.");
-    return;
-  }
+  if (ultimoLogin === hoje) return;
 
-  console.log("Verificando login diário na API...");
-  
-  // Se não tem salvo, chama a API para tentar ganhar ou confirmar
   const ganhou = await ganharPontos("login_diario", token);
 
-  // Se ganhou (true) ou se a API disse que já tinha ganho (que também retorna true na nossa logica ajustada abaixo)
-  // salvamos no localStorage para não tentar mais hoje.
   if (ganhou) {
     localStorage.setItem("ultimo_login_diario_data", hoje);
+    // Força atualização visual imediata sem recarregar
+    document.getElementById("check-login")?.classList.remove("hidden");
+    const bar = document.getElementById("progresso-login-bar");
+    if (bar) bar.style.width = "100%";
   }
 }
 
@@ -55,13 +109,9 @@ async function carregarPerfil(userId) {
     .eq("id", userId)
     .single();
 
-  if (error) {
-    console.error("Erro ao carregar perfil:", error);
-    return;
-  }
+  if (error) return console.error("Erro ao carregar perfil:", error);
 
   const nomeExibido = data.username || data.email;
-
   const elNome = document.getElementById("nomeUsuario");
   if (elNome) elNome.innerText = nomeExibido;
 
@@ -71,9 +121,6 @@ async function carregarPerfil(userId) {
   atualizarPontosNaTela(data.pontos);
 }
 
-// ============================
-// AUXILIAR: ATUALIZAR UI PONTOS
-// ============================
 function atualizarPontosNaTela(valor) {
   const pontosEl = document.getElementById("pontosUsuario");
   if (pontosEl) pontosEl.innerText = valor;
@@ -84,7 +131,7 @@ function atualizarPontosNaTela(valor) {
 // ============================
 document.getElementById("logoutBtn")?.addEventListener("click", async () => {
   await supabase.auth.signOut();
-  localStorage.removeItem("ultimo_login_diario_data"); // Limpa o cache ao sair
+  localStorage.removeItem("ultimo_login_diario_data");
   window.location.href = "/perfil/login.html";
 });
 
@@ -92,7 +139,6 @@ document.getElementById("logoutBtn")?.addEventListener("click", async () => {
 // GANHAR PONTOS (API)
 // ============================
 async function ganharPontos(tipo, tokenOpcional = null) {
-  // Se o token não veio por parâmetro, tenta pegar da sessão atual
   let token = tokenOpcional;
   if (!token) {
     const sessionData = await supabase.auth.getSession();
@@ -113,27 +159,16 @@ async function ganharPontos(tipo, tokenOpcional = null) {
 
     const result = await response.json();
 
-    // SUCESSO (200)
     if (response.ok) {
-      console.log(`Pontos ganhos (${tipo}):`, result.pontos);
       atualizarPontosNaTela(result.pontos);
-      
-      // Feedback visual simples (opcional)
-      // alert("Você ganhou +50 pontos pelo login diário!"); 
-      return true; // Indica que o processo foi concluído com sucesso
+      return true;
     } 
     
-    // ERRO: JÁ GANHOU HOJE (400)
-    // Se a API retornar que já ganhou, consideramos "sucesso" para salvar no localStorage
     if (response.status === 400 && result.error === "Já recebido hoje") {
-      console.log("API informou: Já recebido hoje.");
-      return true; // Retorna true para gravar no localStorage e não tentar de novo
+      return true;
     }
 
-    // OUTROS ERROS
-    console.warn("Erro ao ganhar pontos:", result.error);
     return false;
-
   } catch (error) {
     console.error("Erro de conexão:", error);
     return false;
@@ -147,14 +182,8 @@ const abrirBtn = document.getElementById("abrirConfigConta");
 const modal = document.getElementById("modalConfigConta");
 const fecharBtn = document.getElementById("fecharConfigConta");
 
-abrirBtn?.addEventListener("click", () => {
-  modal?.classList.remove("hidden");
-});
-
-fecharBtn?.addEventListener("click", () => {
-  modal?.classList.add("hidden");
-});
-
+abrirBtn?.addEventListener("click", () => modal?.classList.remove("hidden"));
+fecharBtn?.addEventListener("click", () => modal?.classList.add("hidden"));
 modal?.addEventListener("click", (e) => {
   if (e.target === modal) modal.classList.add("hidden");
 });
