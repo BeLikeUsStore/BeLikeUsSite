@@ -1,56 +1,83 @@
-  <script type="importmap">
-{
-  "imports": {
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
-  }
-}
-</script>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be Like Us — Acesso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+      }
+    }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Estilos das abas */
+        .tab-active { border-bottom: 2px solid black; color: black; font-weight: 600; }
+        .tab-inactive { color: #9ca3af; border-bottom: 2px solid transparent; }
+    </style>
+</head>
+<body class="bg-[#f7f7f7] text-black antialiased">
 
-<main class="min-h-screen flex items-center justify-center bg-[#f7f7f7]">
-  <div class="w-full max-w-md bg-white rounded-2xl p-8 shadow-sm">
+<main class="min-h-screen flex flex-col items-center justify-center px-4">
+    
+    <a href="/" class="mb-8">
+        <img src="/public/logo.png" alt="Be Like Us" class="h-14 w-auto object-contain">
+    </a>
 
-    <h1 class="text-2xl font-light text-center mb-6">
-      Entrar na Be Like Us
-    </h1>
+    <div class="w-full max-w-[400px] bg-white rounded-[32px] p-10 shadow-[0_10px_40px_rgba(0,0,0,0.04)]">
+        
+        <div class="flex justify-center gap-10 mb-10">
+            <button id="tabLogin" class="pb-2 text-xs uppercase tracking-[0.2em] tab-active transition-all">Entrar</button>
+            <button id="tabCadastro" class="pb-2 text-xs uppercase tracking-[0.2em] tab-inactive transition-all hover:text-black">Cadastrar</button>
+        </div>
 
-    <form id="authForm" class="flex flex-col gap-4">
+        <h1 id="authTitle" class="text-2xl font-light text-center mb-10 tracking-tight text-gray-800">
+            Bem-vindo de volta.
+        </h1>
 
-      <input
-        type="email"
-        id="email"
-        placeholder="Email"
-        required
-        class="border px-4 py-3 rounded-md focus:outline-none"
-      />
+        <form id="authForm" class="space-y-6">
+            <div>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    required
+                    class="w-full border-b border-gray-200 py-3 focus:outline-none focus:border-black transition-all text-sm placeholder:text-gray-300"
+                />
+            </div>
 
-      <input
-        type="password"
-        id="password"
-        placeholder="Senha"
-        required
-        class="border px-4 py-3 rounded-md focus:outline-none"
-      />
+            <div>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Senha"
+                    required
+                    class="w-full border-b border-gray-200 py-3 focus:outline-none focus:border-black transition-all text-sm placeholder:text-gray-300"
+                />
+            </div>
 
-      <button
-        type="submit"
-        class="mt-4 px-4 py-3 bg-black text-white rounded-md hover:opacity-90 transition"
-      >
-        Entrar / Criar conta
-      </button>
+            <button
+                type="submit"
+                id="btnSubmit"
+                class="w-full mt-4 py-4 bg-black text-white text-[10px] uppercase tracking-[0.3em] rounded-full hover:bg-zinc-800 transition-all active:scale-[0.97]"
+            >
+                Entrar
+            </button>
 
-<button
-  type="button"
-  id="btnCadastro"
-  class="px-4 py-3 border border-black text-black rounded-md hover:bg-black hover:text-white transition"
->
-  Criar conta
-</button>
+            <p id="mensagem" class="text-[11px] text-center mt-4 min-h-[1.5rem] font-medium"></p>
+        </form>
+    </div>
 
-      <p id="mensagem" class="text-sm text-center text-red-500"></p>
-
-    </form>
-
-  </div>
+    <a href="/" class="mt-12 text-[10px] text-gray-400 hover:text-black transition-colors uppercase tracking-[0.2em]">
+        ← Voltar para a loja
+    </a>
 </main>
 
 <script type="module" src="/perfil/perfil.js"></script>
+</body>
+</html>
