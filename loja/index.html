@@ -4,179 +4,121 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { 
+      theme: {
+        extend: {
+          animation: {
+            'bounce-subtle': 'bounce 2s infinite',
+          }
+        }
+      }
+    }
+  </script>
+
   <script type="importmap">
-{
-  "imports": {
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+  {
+    "imports": {
+      "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+    }
   }
-}
-</script>
+  </script>
 
   <title>Loja — Curadoria Be Like Us</title>
-  <meta name="description" content="Curadoria Be Like Us. Peças selecionadas de marcas globais. Editorial, pesquisa estética e links afiliados." />
-
-  <!-- TAILWIND -->
-  <script>
-    tailwind.config = { darkMode: 'class' }
-  </script>
-  <script src="https://cdn.tailwindcss.com"></script>
-
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body class="bg-white text-black antialiased">
 
-<!-- HEADER -->
-<header id="siteHeader" class="border-b fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300">
-  <div id="headerInner" class="container-max flex items-center justify-between py-5 transition-all duration-300">
+<header id="siteHeader" class="border-b fixed top-0 left-0 w-full bg-white z-50 transition-all duration-500">
+  <div id="headerInner" class="container mx-auto px-4 flex items-center justify-between py-6 transition-all duration-500">
     <a href="/">
-      <img src="/public/logo.png" alt="Be Like Us" class="h-20 w-auto object-contain transition-all duration-300">
+      <img src="/public/logo.png" id="logo" alt="Be Like Us" class="h-20 w-auto object-contain transition-all duration-500">
     </a>
 
-    <nav class="hidden md:flex gap-6 text-sm">
-      <a href="/blog/index.html" class="hover:underline">Blog</a>
-      <a href="/loja/index.html" class="hover:underline">Loja</a>
-      <a href="/sobre/index.html" class="hover:underline">Sobre</a>
-      <a href="/contato/index.html" class="hover:underline">Contato</a>
-              <!-- PERFIL -->
-<div class="relative" id="perfilMenu">
-
-  <!-- BOTÃO AVATAR -->
-  <button
-    id="perfilToggle"
-    class="w-10 h-10 rounded-full border border-black flex items-center justify-center hover:bg-black group transition"
-    aria-label="Menu do perfil"
-  >
-    <svg
-      class="w-5 h-5 text-black group-hover:text-white"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.5"
-      viewBox="0 0 24 24"
-    >
-      <circle cx="12" cy="8" r="4" />
-      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
-    </svg>
-  </button>
-
-  <!-- DROPDOWN -->
-  <div
-    id="perfilDropdown"
-    class="hidden absolute right-0 mt-3 w-44 bg-white border rounded-xl shadow-sm overflow-hidden text-sm z-50"
-  >
-
-    <!-- NÃO LOGADO -->
-    <div id="menuDeslogado">
-      <a href="/perfil/login.html" class="block px-4 py-3 hover:bg-gray-100">
-        Entrar
-      </a>
-      <a href="/perfil/login.html" class="block px-4 py-3 hover:bg-gray-100">
-        Criar conta
-      </a>
-    </div>
-
-    <!-- LOGADO -->
-    <div id="menuLogado" class="hidden">
-      <a href="/perfil/dashboard.html" class="block px-4 py-3 hover:bg-gray-100">
-        Perfil
-      </a>
-      <button
-        id="logoutBtn"
-        class="w-full text-left px-4 py-3 hover:bg-gray-100"
-      >
-        Sair
-      </button>
-    </div>
-
-  </div>
-</div>
+    <nav class="hidden md:flex items-center gap-8 text-[11px] uppercase tracking-[0.2em]">
+      <a href="/blog/index.html" class="hover:text-gray-400 transition">Blog</a>
+      <a href="/loja/index.html" class="border-b border-black">Loja</a>
+      <a href="/sobre/index.html" class="hover:text-gray-400 transition">Sobre</a>
+      <a href="/contato/index.html" class="hover:text-gray-400 transition">Contato</a>
+      
+      <div class="relative" id="perfilMenu">
+        <button id="perfilToggle" class="w-8 h-8 rounded-full border border-black flex items-center justify-center hover:bg-black group transition">
+          <svg class="w-4 h-4 text-black group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+          </svg>
+        </button>
+        <div id="perfilDropdown" class="hidden absolute right-0 mt-3 w-44 bg-white border shadow-xl z-50">
+          <div id="menuDeslogado">
+            <a href="/perfil/login.html" class="block px-4 py-3 hover:bg-gray-50">Entrar</a>
+          </div>
+          <div id="menuLogado" class="hidden">
+            <a href="/perfil/dashboard.html" class="block px-4 py-3 hover:bg-gray-50">Dashboard</a>
+            <button id="logoutBtn" class="w-full text-left px-4 py-3 hover:bg-gray-50">Sair</button>
+          </div>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
 
-<main class="pt-32 bg-[#f7f7f7] min-h-screen py-10">
+<main class="pt-40 bg-[#fbfbfb] min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 pb-20">
+    <header class="text-center mb-16">
+      <h1 class="text-5xl font-extralight tracking-tighter mb-4 italic">Combinações perfeitas</h1>
+      <p class="text-gray-400 font-light tracking-widest text-xs uppercase">Curadoria Editorial Select</p>
 
- <div class="h-28"></div>
+      <div class="mt-12 flex flex-col md:flex-row items-center justify-between border-y border-gray-100 py-4 gap-4">
+        <div class="flex flex-wrap justify-center gap-2">
+          <button data-filtro="todos" class="px-5 py-1.5 text-[10px] uppercase tracking-widest border border-black bg-black text-white transition-all">Todos</button>
+          <button data-filtro="camisetas" class="px-5 py-1.5 text-[10px] uppercase tracking-widest border border-gray-200 hover:border-black transition-all">Camisetas</button>
+          <button data-filtro="blusas" class="px-5 py-1.5 text-[10px] uppercase tracking-widest border border-gray-200 hover:border-black transition-all">Blusas</button>
+          <button data-filtro="casacos" class="px-5 py-1.5 text-[10px] uppercase tracking-widest border border-gray-200 hover:border-black transition-all">Casacos</button>
+          <button data-filtro="calcas" class="px-5 py-1.5 text-[10px] uppercase tracking-widest border border-gray-200 hover:border-black transition-all">Calças</button>
+          <button data-filtro="acessorios" class="px-5 py-1.5 text-[10px] uppercase tracking-widest border border-gray-200 hover:border-black transition-all">Acessórios</button>
+        </div>
 
-  <!-- CONTAINER CENTRAL -->
-  <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-sm px-6 md:px-12 py-10">
+        <select id="ordenacao" class="bg-transparent text-[10px] uppercase tracking-widest focus:outline-none cursor-pointer border-none">
+          <option value="">Ordenar por</option>
+          <option value="menor">Menor preço</option>
+          <option value="maior">Maior preço</option>
+        </select>
+      </div>
+    </header>
 
-    <!-- HERO -->
-    <section class="text-center mb-14">
-      <h1 class="text-4xl md:text-5xl font-light tracking-tight">
-        Combinações perfeitas
-      </h1>
-      <p class="mt-4 text-gray-600">
-        Encontre looks que combinam com seu estilo
-      </p>
-
-<!-- FILTROS + ORDENAR -->
-<div class="relative mt-8 flex items-center">
-
-  <!-- FILTROS (CENTRO REAL) -->
-  <div class="mx-auto flex flex-wrap justify-center gap-3 text-sm">
-    <button data-filtro="todos" class="filtro px-4 py-2 border rounded-full">Todos</button>
-    <button data-filtro="camisetas" class="filtro px-4 py-2 border rounded-full hover:bg-black hover:text-white transition">Camisetas</button>
-    <button data-filtro="blusas" class="filtro px-4 py-2 border rounded-full">Blusas</button>
-    <button data-filtro="casacos" class="filtro px-4 py-2 border rounded-full">Casacos</button>
-    <button data-filtro="calcas" class="filtro px-4 py-2 border rounded-full">Calças</button>
-    <button data-filtro="acessorios" class="filtro px-4 py-2 border rounded-full">Acessórios</button>
-  </div>
-
-  <!-- ORDENAR (DIREITA, SEM BORDA) -->
-  <div class="absolute right-0">
-    <select
-      id="ordenacao"
-      class="bg-transparent text-sm focus:outline-none cursor-pointer">
-      <option value="">Ordenar</option>
-      <option value="menor">Menor preço</option>
-      <option value="maior">Maior preço</option>
-    </select>
-  </div>
-
-</div>
-
-    <!-- GRID DE PRODUTOS -->
-<section id="produtosGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-12"></section>
-
+    <section id="produtosGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12"></section>
   </div>
 </main>
 
-<!-- FOOTER -->
-<footer class="border-t mt-20">
-  <div class="container-max py-6 text-xs text-gray-500">
-    © <span id="year"></span> Be Like Us.
+<footer class="border-t py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-4 text-[10px] tracking-[0.3em] text-gray-400 uppercase text-center">
+    © <span id="year"></span> Be Like Us — Todos os direitos reservados.
   </div>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
-<script>
+  
+  // LOGICA DO SCROLL CORRIGIDA
   const header = document.getElementById('siteHeader');
   const headerInner = document.getElementById('headerInner');
   const logo = document.getElementById('logo');
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 80) {
+    if (window.scrollY > 50) {
+      headerInner.classList.replace('py-6', 'py-3');
+      logo.classList.replace('h-20', 'h-12');
       header.classList.add('shadow-sm');
-      headerInner.classList.remove('py-6');
-      headerInner.classList.add('py-3');
-      logo.classList.remove('h-20');
-      logo.classList.add('h-14');
     } else {
+      headerInner.classList.replace('py-3', 'py-6');
+      logo.classList.replace('h-12', 'h-20');
       header.classList.remove('shadow-sm');
-      headerInner.classList.add('py-6');
-      headerInner.classList.remove('py-3');
-      logo.classList.add('h-20');
-      logo.classList.remove('h-14');
     }
   });
 </script>
 
 <script type="module" src="/loja/loja.js"></script>
-<script src="/js/theme.js"></script>
 <script type="module" src="/js/perfil-menu.js"></script>
 
 </body>

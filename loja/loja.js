@@ -10,9 +10,25 @@ let produtos = [];
 let categoriaAtiva = "todos";
 let ordenacaoAtiva = "padrao";
 
+// ===== FUNÇÃO TOAST (O AVISO BONITÃO) =====
+function showToast(mensagem) {
+    const toast = document.createElement("div");
+    // Estilo Preto e Branco (Igual a logo), arredondado e com sombra
+    toast.className = "fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-black text-white px-6 py-3 rounded-full shadow-2xl z-[100] flex items-center gap-2 animate-bounce-subtle text-sm tracking-wide";
+    toast.innerHTML = `<span>${mensagem}</span>`;
+    
+    document.body.appendChild(toast);
+
+    // Remove depois de 3 segundos
+    setTimeout(() => {
+        toast.classList.add("opacity-0", "transition-opacity", "duration-500");
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+
 // ===== 1. BUSCAR DO SUPABASE =====
 async function carregarProdutos() {
-  grid.innerHTML = '<p class="col-span-full text-center py-20 text-gray-400 animate-pulse">Carregando curadoria...</p>';
+  grid.innerHTML = '<p class="col-span-full text-center py-20 text-gray-400 animate-pulse font-light">Carregando curadoria...</p>';
   
   const { data, error } = await supabase
     .from('produtos')
@@ -20,7 +36,6 @@ async function carregarProdutos() {
     .eq('estoque_ativo', true);
 
   if (error) {
-    console.error("Erro ao carregar:", error);
     grid.innerHTML = '<p class="col-span-full text-center text-red-500">Erro ao carregar produtos.</p>';
     return;
   }
@@ -29,91 +44,67 @@ async function carregarProdutos() {
   atualizarProdutos();
 }
 
-// ===== 2. LÓGICA DE CLIQUE E PONTOS (COM TRAVA DIÁRIA) =====
+// ===== 2. LÓGICA DE CLIQUE E PONTOS =====
 window.registrarClique = async (produtoId, linkAfiliado) => {
-    // 1. Abre a loja em nova aba imediatamente (Prioridade UX)
     window.open(linkAfiliado, '_blank');
 
     const { data: { session } } = await supabase.auth.getSession();
 
     if (session) {
         const userId = session.user.id;
-        // Pega a data de hoje (AAAA-MM-DD) para comparar
         const hoje = new Date().toISOString().split('T')[0];
 
-        // 2. VERIFICAÇÃO DE SEGURANÇA
-        // Pergunta ao banco: "Existe algum registro desse user, nesse produto, HOJE?"
-        const { data: jaClicou, error: erroCheck } = await supabase
+        const { data: jaClicou } = await supabase
             .from('pontos_historico')
             .select('id')
             .eq('user_id', userId)
             .eq('produto_id', produtoId)
             .eq('tipo', 'visita_loja')
-            .gte('created_at', `${hoje}T00:00:00`) // Início do dia
-            .lte('created_at', `${hoje}T23:59:59`) // Fim do dia
-            .maybeSingle(); // Retorna null se não achar nada
+            .gte('created_at', `${hoje}T00:00:00`)
+            .lte('created_at', `${hoje}T23:59:59`)
+            .maybeSingle();
 
-        // 3. SE NÃO CLICOU HOJE, SALVA O PONTO
         if (!jaClicou) {
-            console.log(`Registrando ponto único para o produto ${produtoId}...`);
-            
             const { error } = await supabase
                 .from('pontos_historico')
-                .insert([
-                    { 
-                        user_id: userId, 
-                        tipo: 'visita_loja', 
-                        produto_id: produtoId,
-                        pontos: 1 // Garante que o valor do ponto seja salvo
-                    }
-                ]);
+                .insert([{ 
+                    user_id: userId, 
+                    tipo: 'visita_loja', 
+                    produto_id: produtoId,
+                    pontos: 1 
+                }]);
 
-            if (error) {
-                console.error("Erro ao salvar ponto:", error);
-            } else {
-                console.log("Ponto computado com sucesso!");
+            if (!error) {
+                showToast("✨ +1 ponto na missão diária!");
             }
-        } else {
-            console.log("Usuário já pontuou com este produto hoje (Duplicidade evitada).");
         }
     }
 };
 
-// ===== 3. RENDERIZAR (ESTILO EDITORIAL / FARFETCH) =====
+// ===== 3. RENDERIZAR =====
 function renderProdutos(lista) {
   grid.innerHTML = "";
-
   if (lista.length === 0) {
-    grid.innerHTML = '<p class="col-span-full text-center py-10 text-gray-400 font-light">Nenhum item encontrado nesta categoria.</p>';
+    grid.innerHTML = '<p class="col-span-full text-center py-10 text-gray-400 font-light">Nenhum item encontrado.</p>';
     return;
   }
 
   lista.forEach(produto => {
     const artigo = document.createElement("article");
     artigo.className = "group cursor-pointer animate-fade-in"; 
-
     const precoFormatado = parseFloat(produto.preco_original).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
     
-    const imgPrincipal = produto.imagem_url;
-    const imgHover = produto.imagem_hover_url || produto.imagem_url;
-
     artigo.innerHTML = `
       <div class="relative aspect-[3/4] overflow-hidden bg-[#f9f9f9] mb-4" 
            onclick="window.registrarClique('${produto.id}', '${produto.link_afiliado}')">
-        
-        <img src="${imgPrincipal}" alt="${produto.nome}"
-          class="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out group-hover:opacity-0">
-          
-        <img src="${imgHover}" alt="${produto.nome} vestindo"
-          class="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100">
-        
+        <img src="${produto.imagem_url}" class="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 group-hover:opacity-0">
+        <img src="${produto.imagem_hover_url || produto.imagem_url}" class="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 opacity-0 group-hover:opacity-100">
         <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/20 to-transparent">
           <button class="w-full bg-white text-black py-2.5 text-[10px] uppercase tracking-[0.2em] font-bold border border-white hover:bg-black hover:text-white transition-colors">
             Ver na Loja
           </button>
         </div>
       </div>
-
       <div class="space-y-1 px-1">
         <h3 class="text-sm font-light tracking-tight text-gray-900">${produto.nome}</h3>
         <div class="flex justify-between items-baseline">
@@ -122,46 +113,27 @@ function renderProdutos(lista) {
         </div>
       </div>
     `;
-
     grid.appendChild(artigo);
   });
 }
 
-// ===== 4. FILTROS E ORDENAÇÃO =====
 function atualizarProdutos() {
   let lista = [...produtos];
-
-  if (categoriaAtiva !== "todos") {
-    lista = lista.filter(p => p.categoria && p.categoria.toLowerCase() === categoriaAtiva.toLowerCase());
-  }
-
-  if (ordenacaoAtiva === "menor") {
-    lista.sort((a, b) => a.preco_original - b.preco_original);
-  } else if (ordenacaoAtiva === "maior") {
-    lista.sort((a, b) => b.preco_original - a.preco_original);
-  }
-
+  if (categoriaAtiva !== "todos") lista = lista.filter(p => p.categoria?.toLowerCase() === categoriaAtiva.toLowerCase());
+  if (ordenacaoAtiva === "menor") lista.sort((a, b) => a.preco_original - b.preco_original);
+  else if (ordenacaoAtiva === "maior") lista.sort((a, b) => b.preco_original - a.preco_original);
   renderProdutos(lista);
 }
 
-// ===== EVENTOS =====
 filtros.forEach(botao => {
   botao.addEventListener("click", () => {
-    filtros.forEach(b => b.classList.remove('bg-black', 'text-white'));
-    filtros.forEach(b => b.classList.add('bg-white', 'text-black'));
-    
-    botao.classList.remove('bg-white', 'text-black');
-    botao.classList.add('bg-black', 'text-white');
-
+    filtros.forEach(b => { b.classList.remove('bg-black', 'text-white'); b.classList.add('bg-white', 'text-black'); });
+    botao.classList.replace('bg-white', 'bg-black');
+    botao.classList.replace('text-black', 'text-white');
     categoriaAtiva = botao.dataset.filtro;
     atualizarProdutos();
   });
 });
 
-ordenacao.addEventListener("change", e => {
-  ordenacaoAtiva = e.target.value;
-  atualizarProdutos();
-});
-
-// Iniciar
+ordenacao.addEventListener("change", e => { ordenacaoAtiva = e.target.value; atualizarProdutos(); });
 carregarProdutos();
