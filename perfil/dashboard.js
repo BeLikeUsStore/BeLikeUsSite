@@ -11,13 +11,13 @@ async function verificarSessao() {
   const userId = data.session.user.id;
   const token = data.session.access_token;
 
-  // 1. Carrega dados básicos
+  // 1. Carrega dados básicos (Nome, Pontos Totais)
   await carregarPerfil(userId);
 
-  // 2. Processa o login diário (pontuação)
+  // 2. Processa o login diário
   await processarLoginDiario(token);
 
-  // 3. 🔥 NOVO: Atualiza o visual das barras de progresso
+  // 3. Atualiza as Barras de Progresso (Missões)
   await atualizarProgressoTarefas(userId);
 }
 
@@ -29,7 +29,7 @@ async function verificarSessao() {
 async function atualizarProgressoTarefas(userId) {
   const hoje = new Date().toISOString().slice(0, 10);
 
-  // Buscamos o histórico de hoje para contar o progresso
+  // Busca APENAS o histórico de hoje (Isso faz o "Reset Diário")
   const { data: historico, error } = await supabase
     .from("pontos_historico")
     .select("tipo, produto_id")
@@ -57,21 +57,33 @@ async function atualizarProgressoTarefas(userId) {
   const barArtigo = document.getElementById("progresso-artigo-bar");
   if (barArtigo) barArtigo.style.width = leuArtigo ? "100%" : "0%";
 
-  // --- PROGRESSO LOJA (0/15) ---
-  const visitasLoja = historico.filter(item => item.tipo === "visita_loja").length;
-  // Limitamos a 15 para a barra não passar de 100%
-  const visitasLimitadas = Math.min(visitasLoja, 15);
+  // --- PROGRESSO LOJA (X/15) - A MÁGICA ACONTECE AQUI ---
+  
+  // 1. Separa apenas cliques de loja
+  const cliquesLoja = historico.filter(item => item.tipo === "visita_loja");
+
+  // 2. Cria uma lista de PRODUTOS ÚNICOS clicados hoje
+  // O "Set" remove duplicatas automaticamente se o ID for igual
+  const produtosUnicos = new Set(cliquesLoja.map(item => item.produto_id));
+  
+  const contagemUnica = produtosUnicos.size;
+
+  // 3. Trava visual em 15 (para a barra não estourar 100%)
+  const visitasLimitadas = Math.min(contagemUnica, 15);
   const porcentagemLoja = (visitasLimitadas / 15) * 100;
 
+  // 4. Atualiza o texto e a barra
   const textoLoja = document.getElementById("progresso-loja-texto");
-  if (textoLoja) textoLoja.innerText = `${visitasLoja}/15`;
+  if (textoLoja) textoLoja.innerText = `${contagemUnica}/15`; 
 
   const barLoja = document.getElementById("progresso-loja-bar");
-  if (barLoja) barLoja.style.width = `${porcentagemLoja}%`;
-  
-  // Se completou os 15, podemos mudar a cor para verde ou manter preto
-  if (visitasLoja >= 15 && barLoja) {
-    barLoja.classList.replace("bg-black", "bg-green-500");
+  if (barLoja) {
+      barLoja.style.width = `${porcentagemLoja}%`;
+      // Se completou a missão, muda para verde
+      if (contagemUnica >= 15) {
+          barLoja.classList.remove("bg-black");
+          barLoja.classList.add("bg-green-500");
+      }
   }
 }
 
@@ -90,7 +102,6 @@ async function processarLoginDiario(token) {
 
   if (ganhou) {
     localStorage.setItem("ultimo_login_diario_data", hoje);
-    // Força atualização visual imediata sem recarregar
     document.getElementById("check-login")?.classList.remove("hidden");
     const bar = document.getElementById("progresso-login-bar");
     if (bar) bar.style.width = "100%";

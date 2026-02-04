@@ -29,16 +29,53 @@ async function carregarProdutos() {
   atualizarProdutos();
 }
 
-// ===== 2. LÓGICA DE CLIQUE E PONTOS =====
+// ===== 2. LÓGICA DE CLIQUE E PONTOS (COM TRAVA DIÁRIA) =====
 window.registrarClique = async (produtoId, linkAfiliado) => {
-    // Abre a loja em nova aba imediatamente
+    // 1. Abre a loja em nova aba imediatamente (Prioridade UX)
     window.open(linkAfiliado, '_blank');
 
     const { data: { session } } = await supabase.auth.getSession();
 
     if (session) {
-        console.log(`Usuário ${session.user.email} clicou no produto ${produtoId}.`);
-        // Aqui você pode adicionar a chamada para sua tabela de logs/pontos futuramente
+        const userId = session.user.id;
+        // Pega a data de hoje (AAAA-MM-DD) para comparar
+        const hoje = new Date().toISOString().split('T')[0];
+
+        // 2. VERIFICAÇÃO DE SEGURANÇA
+        // Pergunta ao banco: "Existe algum registro desse user, nesse produto, HOJE?"
+        const { data: jaClicou, error: erroCheck } = await supabase
+            .from('pontos_historico')
+            .select('id')
+            .eq('user_id', userId)
+            .eq('produto_id', produtoId)
+            .eq('tipo', 'visita_loja')
+            .gte('created_at', `${hoje}T00:00:00`) // Início do dia
+            .lte('created_at', `${hoje}T23:59:59`) // Fim do dia
+            .maybeSingle(); // Retorna null se não achar nada
+
+        // 3. SE NÃO CLICOU HOJE, SALVA O PONTO
+        if (!jaClicou) {
+            console.log(`Registrando ponto único para o produto ${produtoId}...`);
+            
+            const { error } = await supabase
+                .from('pontos_historico')
+                .insert([
+                    { 
+                        user_id: userId, 
+                        tipo: 'visita_loja', 
+                        produto_id: produtoId,
+                        pontos: 1 // Garante que o valor do ponto seja salvo
+                    }
+                ]);
+
+            if (error) {
+                console.error("Erro ao salvar ponto:", error);
+            } else {
+                console.log("Ponto computado com sucesso!");
+            }
+        } else {
+            console.log("Usuário já pontuou com este produto hoje (Duplicidade evitada).");
+        }
     }
 };
 
@@ -53,12 +90,10 @@ function renderProdutos(lista) {
 
   lista.forEach(produto => {
     const artigo = document.createElement("article");
-    // 'group' permite controlar os filhos (imagens) no hover
     artigo.className = "group cursor-pointer animate-fade-in"; 
 
     const precoFormatado = parseFloat(produto.preco_original).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
     
-    // Fallback caso não tenha a segunda imagem cadastrada ainda
     const imgPrincipal = produto.imagem_url;
     const imgHover = produto.imagem_hover_url || produto.imagem_url;
 
