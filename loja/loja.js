@@ -8,6 +8,7 @@ const ordenacao = document.getElementById("ordenacao");
 // ===== ESTADO =====
 let produtos = []; 
 let categoriaAtiva = "todos";
+let generoAtivo = "masculino";
 let ordenacaoAtiva = "padrao";
 
 // ===== FUNÇÃO TOAST (O AVISO BONITÃO) =====
@@ -119,9 +120,22 @@ function renderProdutos(lista) {
 
 function atualizarProdutos() {
   let lista = [...produtos];
-  if (categoriaAtiva !== "todos") lista = lista.filter(p => p.categoria?.toLowerCase() === categoriaAtiva.toLowerCase());
-  if (ordenacaoAtiva === "menor") lista.sort((a, b) => a.preco_original - b.preco_original);
-  else if (ordenacaoAtiva === "maior") lista.sort((a, b) => b.preco_original - a.preco_original);
+
+  // 1. Filtra por Gênero (Crucial para não misturar)
+  lista = lista.filter(p => p.genero === generoAtivo || p.genero === "unissex");
+
+  // 2. Filtra por Categoria (Se não for "todos")
+  if (categoriaAtiva !== "todos") {
+    lista = lista.filter(p => p.categoria?.toLowerCase() === categoriaAtiva.toLowerCase());
+  }
+
+  // 3. Ordenação
+  if (ordenacaoAtiva === "menor") {
+    lista.sort((a, b) => a.preco_original - b.preco_original);
+  } else if (ordenacaoAtiva === "maior") {
+    lista.sort((a, b) => b.preco_original - a.preco_original);
+  }
+
   renderProdutos(lista);
 }
 
@@ -137,3 +151,34 @@ filtros.forEach(botao => {
 
 ordenacao.addEventListener("change", e => { ordenacaoAtiva = e.target.value; atualizarProdutos(); });
 carregarProdutos();
+
+// ===== LÓGICA DE TROCA DE GÊNERO =====
+const botoesGenero = document.querySelectorAll(".genero-btn");
+
+botoesGenero.forEach(botao => {
+  botao.addEventListener("click", () => {
+    // 1. Estética: Muda as cores dos botões
+    botoesGenero.forEach(b => {
+      b.classList.remove('text-black', 'border-b', 'border-black');
+      b.classList.add('text-gray-400');
+    });
+    botao.classList.remove('text-gray-400');
+    botao.classList.add('text-black', 'border-b', 'border-black');
+
+    // 2. Lógica: Atualiza o gênero ativo e reseta a categoria para "todos"
+    generoAtivo = botao.dataset.genero;
+    categoriaAtiva = "todos";
+    
+    // 3. Reseta visualmente os botões de categoria para o "Todos" ficar marcado
+    filtros.forEach(b => {
+      b.classList.remove('bg-black', 'text-white');
+      b.classList.add('bg-white', 'text-black');
+      if(b.dataset.filtro === "todos") {
+        b.classList.replace('bg-white', 'bg-black');
+        b.classList.replace('text-black', 'text-white');
+      }
+    });
+
+    atualizarProdutos();
+  });
+});

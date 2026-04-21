@@ -69,6 +69,15 @@
       <h1 class="text-5xl font-extralight tracking-tighter mb-4 italic">Combinações perfeitas</h1>
       <p class="text-gray-400 font-light tracking-widest text-xs uppercase">Curadoria Editorial Select</p>
 
+<div class="mt-8 flex justify-center gap-8 border-b border-gray-100 pb-4 max-w-xs mx-auto">
+  <button data-genero="masculino" class="genero-btn text-[11px] uppercase tracking-[0.2em] font-medium text-black border-b border-black pb-1 transition-all">
+    Masculino
+  </button>
+  <button data-genero="feminino" class="genero-btn text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400 hover:text-black transition-all">
+    Feminino
+  </button>
+</div>
+
       <div class="mt-12 flex flex-col md:flex-row items-center justify-between border-y border-gray-100 py-4 gap-4">
         <div class="flex flex-wrap justify-center gap-2">
           <button data-filtro="todos" class="px-5 py-1.5 text-[10px] uppercase tracking-widest border border-black bg-black text-white transition-all">Todos</button>
@@ -92,16 +101,17 @@
 </main>
 
 <footer class="border-t py-12 bg-white">
-  <div class="max-w-7xl mx-auto px-4 text-[10px] tracking-[0.3em] text-gray-400 uppercase text-center">
-    © <span id="year"></span> Be Like Us — Todos os direitos reservados.
-            <a href="/termos.html" class="text-[9px] uppercase tracking-[0.2em] text-gray-400 hover:text-black transition-colors duration-300">
-    Termos de Uso
-  </a>
-  <a href="/privacidade.html" class="text-[9px] uppercase tracking-[0.2em] text-gray-400 hover:text-black transition-colors duration-300">
-    Privacidade
-  </a>
-          <a href="/sobre/index.html" class="hover:underline">Sobre</a>
-        <a href="/contato/index.html" class="hover:underline">Contato</a>
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <div class="text-[10px] tracking-[0.3em] text-gray-400 uppercase mb-4">
+      © <span id="year"></span> Be Like Us — Todos os direitos reservados.
+    </div>
+    
+    <div class="flex flex-wrap justify-center gap-6">
+      <a href="/termos.html" class="text-[9px] uppercase tracking-[0.2em] text-gray-400 hover:text-black transition">Termos de Uso</a>
+      <a href="/privacidade.html" class="text-[9px] uppercase tracking-[0.2em] text-gray-400 hover:text-black transition">Privacidade</a>
+      <a href="/sobre/index.html" class="text-[9px] uppercase tracking-[0.2em] text-gray-400 hover:text-black transition">Sobre</a>
+      <a href="/contato/index.html" class="text-[9px] uppercase tracking-[0.2em] text-gray-400 hover:text-black transition">Contato</a>
+    </div>
   </div>
 </footer>
 
