@@ -32,11 +32,25 @@
 <body class="bg-white text-black antialiased">
 
 <header id="siteHeader" class="border-b fixed top-0 left-0 w-full bg-white z-50 transition-all duration-500">
-  <div id="headerInner" class="container mx-auto px-4 flex items-center justify-between py-6 transition-all duration-500">
-    <a href="/">
+  <div id="headerInner" class="container mx-auto px-4 relative flex items-center justify-center md:justify-between py-6 transition-all duration-500">
+    
+    <!-- BOTÃO MOBILE (HAMBÚRGUER) - FIXO À ESQUERDA -->
+    <div class="absolute left-4 md:hidden flex items-center">
+      <button id="menuToggle" aria-label="Abrir menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- LOGO (CENTRALIZADA NO MOBILE, À ESQUERDA NO DESKTOP) -->
+    <a href="/" class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
       <img src="/public/logo.png" id="logo" alt="Be Like Us" class="h-20 w-auto object-contain transition-all duration-500">
     </a>
 
+    <!-- NAVEGAÇÃO DESKTOP -->
     <nav class="hidden md:flex items-center gap-8 text-[11px] uppercase tracking-[0.2em]">
       <a href="/blog/index.html" class="hover:text-gray-400 transition">Blog</a>
       <a href="/loja/index.html" class="border-b border-black">Loja</a>
@@ -60,21 +74,10 @@
         </div>
       </div>
     </nav>
-
-    <!-- NOVO: Botão Mobile (Hambúrguer) copiado da index -->
-    <div class="md:hidden flex items-center">
-      <button id="menuToggle" aria-label="Abrir menu">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round">
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="18" x2="21" y2="18" />
-        </svg>
-      </button>
-    </div>
   </div>
 </header>
 
-<!-- NOVO: MENU MOBILE OVERLAY copiado da index -->
+<!-- MENU MOBILE OVERLAY -->
 <div
   id="mobileMenu"
   class="fixed inset-0 bg-white z-50 hidden translate-x-[-100%] transition-transform duration-300 ease-in-out"
@@ -103,7 +106,6 @@
   
   <!-- PERFIL MOBILE -->
   <div class="border-b pb-6 mb-6">
-    <!-- AVATAR -->
     <button
       id="perfilToggleMobile"
       class="w-12 h-12 mx-auto rounded-full border border-black flex items-center justify-center hover:bg-black group transition"
@@ -121,12 +123,10 @@
       </svg>
     </button>
 
-    <!-- DROPDOWN MOBILE -->
     <div
       id="perfilDropdownMobile"
       class="hidden mt-4 text-center text-base"
     >
-      <!-- NÃO LOGADO -->
       <div id="menuDeslogadoMobile">
         <a href="/perfil/login.html" class="block py-2 hover:underline">
           Entrar
@@ -136,7 +136,6 @@
         </a>
       </div>
 
-      <!-- LOGADO -->
       <div id="menuLogadoMobile" class="hidden">
         <a href="/perfil/dashboard.html" class="block py-2 hover:underline">
           Perfil
@@ -158,14 +157,14 @@
       <h1 class="text-5xl font-extralight tracking-tighter mb-4 italic">Combinações perfeitas</h1>
       <p class="text-gray-400 font-light tracking-widest text-xs uppercase">Curadoria Editorial Select</p>
 
-<div class="mt-8 flex justify-center gap-8 border-b border-gray-100 pb-4 max-w-xs mx-auto">
-  <button data-genero="masculino" class="genero-btn text-[11px] uppercase tracking-[0.2em] font-medium text-black border-b border-black pb-1 transition-all">
-    Masculino
-  </button>
-  <button data-genero="feminino" class="genero-btn text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400 hover:text-black transition-all">
-    Feminino
-  </button>
-</div>
+      <div class="mt-8 flex justify-center gap-8 border-b border-gray-100 pb-4 max-w-xs mx-auto">
+        <button data-genero="masculino" class="genero-btn text-[11px] uppercase tracking-[0.2em] font-medium text-black border-b border-black pb-1 transition-all">
+          Masculino
+        </button>
+        <button data-genero="feminino" class="genero-btn text-[11px] uppercase tracking-[0.2em] font-medium text-gray-400 hover:text-black transition-all">
+          Feminino
+        </button>
+      </div>
 
       <div class="mt-12 flex flex-col md:flex-row items-center justify-between border-y border-gray-100 py-4 gap-4">
         <div class="flex flex-wrap justify-center gap-2">
@@ -207,7 +206,6 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
   
-  // LOGICA DO SCROLL CORRIGIDA
   const header = document.getElementById('siteHeader');
   const headerInner = document.getElementById('headerInner');
   const logo = document.getElementById('logo');
@@ -225,9 +223,9 @@
   });
 </script>
 
-<!-- NOVO: SCRIPT DO MENU MOBILE copiado da index -->
+<!-- SCRIPT DE ABERTURA/FECHAMENTO DO MENU MOBILE CORRIGIDO -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+const initMobileMenu = () => {
   const openBtn = document.getElementById("menuToggle");
   const closeBtn = document.getElementById("menuClose");
   const menu = document.getElementById("mobileMenu");
@@ -235,15 +233,23 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!openBtn || !closeBtn || !menu) return;
 
   openBtn.addEventListener("click", () => {
-    menu.classList.remove("hidden");
+    menu.classList.remove("hidden", "translate-x-[-100%]");
+    menu.classList.add("translate-x-0");
     document.body.classList.add("overflow-hidden");
   });
 
   closeBtn.addEventListener("click", () => {
-    menu.classList.add("hidden");
+    menu.classList.add("hidden", "translate-x-[-100%]");
+    menu.classList.remove("translate-x-0");
     document.body.classList.remove("overflow-hidden");
   });
-});
+};
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initMobileMenu);
+} else {
+  initMobileMenu();
+}
 </script>
 
 <script type="module" src="/loja/loja.js"></script>
