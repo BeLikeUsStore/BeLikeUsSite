@@ -60,8 +60,97 @@
         </div>
       </div>
     </nav>
+
+    <!-- NOVO: Botão Mobile (Hambúrguer) copiado da index -->
+    <div class="md:hidden flex items-center">
+      <button id="menuToggle" aria-label="Abrir menu">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
   </div>
 </header>
+
+<!-- NOVO: MENU MOBILE OVERLAY copiado da index -->
+<div
+  id="mobileMenu"
+  class="fixed inset-0 bg-white z-50 hidden translate-x-[-100%] transition-transform duration-300 ease-in-out"
+>
+  <div class="p-6 flex flex-col gap-6 text-lg">
+    <!-- BOTÃO FECHAR -->
+    <button id="menuClose" class="self-end text-2xl" aria-label="Fechar menu">
+      ✕
+    </button>
+
+    <!-- LOGO -->
+    <div class="flex justify-center mb-4">
+      <img
+        src="/public/logo.png"
+        alt="Be Like Us"
+        class="h-16 w-auto"
+      />
+    </div>
+
+    <!-- LINKS -->
+    <a href="/blog/index.html" class="border-b pb-2">Do blog</a>
+    <a href="/sobre/index.html" class="border-b pb-2">Sobre</a>
+    <a href="/contato/index.html" class="border-b pb-2">Contato</a>
+    <a href="/loja/index.html" class="border-b pb-2">Loja</a>
+  </div>
+  
+  <!-- PERFIL MOBILE -->
+  <div class="border-b pb-6 mb-6">
+    <!-- AVATAR -->
+    <button
+      id="perfilToggleMobile"
+      class="w-12 h-12 mx-auto rounded-full border border-black flex items-center justify-center hover:bg-black group transition"
+      aria-label="Menu do perfil"
+    >
+      <svg
+        class="w-6 h-6 text-black group-hover:text-white"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        viewBox="0 0 24 24"
+      >
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+      </svg>
+    </button>
+
+    <!-- DROPDOWN MOBILE -->
+    <div
+      id="perfilDropdownMobile"
+      class="hidden mt-4 text-center text-base"
+    >
+      <!-- NÃO LOGADO -->
+      <div id="menuDeslogadoMobile">
+        <a href="/perfil/login.html" class="block py-2 hover:underline">
+          Entrar
+        </a>
+        <a href="/perfil/login.html" class="block py-2 hover:underline">
+          Criar conta
+        </a>
+      </div>
+
+      <!-- LOGADO -->
+      <div id="menuLogadoMobile" class="hidden">
+        <a href="/perfil/dashboard.html" class="block py-2 hover:underline">
+          Perfil
+        </a>
+        <button
+          id="logoutBtnMobile"
+          class="w-full py-2 hover:underline"
+        >
+          Sair
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <main class="pt-40 bg-[#fbfbfb] min-h-screen">
   <div class="max-w-7xl mx-auto px-4 pb-20">
@@ -134,6 +223,27 @@
       header.classList.remove('shadow-sm');
     }
   });
+</script>
+
+<!-- NOVO: SCRIPT DO MENU MOBILE copiado da index -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const openBtn = document.getElementById("menuToggle");
+  const closeBtn = document.getElementById("menuClose");
+  const menu = document.getElementById("mobileMenu");
+
+  if (!openBtn || !closeBtn || !menu) return;
+
+  openBtn.addEventListener("click", () => {
+    menu.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+  });
+
+  closeBtn.addEventListener("click", () => {
+    menu.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+  });
+});
 </script>
 
 <script type="module" src="/loja/loja.js"></script>
